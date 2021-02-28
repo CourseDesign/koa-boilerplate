@@ -9,16 +9,21 @@
     "link:convert": "lerna link convert",
     "create": "lerna create",
     "build": "lerna run build",
-    "lint": "lerna run lint",
-    "lint:fix": "lerna run lint:fix",
-    "test": "jest",
-    "clean": "lerna run clean",
+    "lint": "lerna run lint --parallel",
+    "lint:fix": "lerna run lint:fix --parallel",
+    "test": "lerna run test --parallel",
+    "clean": "lerna run clean --parallel",
     "package:publish": "lerna publish",
     "package:init": "./scripts/init-package.sh",
-    "postinstall": "husky install"
+    "postinstall": "husky install",
+    "prepublishOnly": "pinst --disable",
+    "postpublish": "pinst --enable"
   },
   "workspaces": [
-    "packages/*"
+    "modules/*",
+    "commons/*",
+    "domains/*",
+    "applications/*"
   ],
   "devDependencies": {
     "@types/jest": "^26.0.20",

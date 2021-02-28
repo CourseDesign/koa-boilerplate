@@ -10,7 +10,7 @@ updates:
     labels:
       - dependencies
   - package-ecosystem: npm
-    directory: "/packages/*"
+    directory: "/modules/*"
     schedule:
       interval: daily
       time: "21:00"
@@ -18,3 +18,30 @@ updates:
     target-branch: develop
     labels:
       - dependencies
+  - package-ecosystem: npm
+    directory: "/commons/*"
+    schedule:
+      interval: daily
+      time: "21:00"
+      timezone: "Asia/Seoul"
+      target-branch: develop
+      labels:
+        - dependencies
+  - package-ecosystem: npm
+    directory: "/domains/*"
+    schedule:
+      interval: daily
+      time: "21:00"
+      timezone: "Asia/Seoul"
+      target-branch: develop
+      labels:
+        - dependencies
+  - package-ecosystem: npm
+    directory: "/applications/*"
+    schedule:
+      interval: daily
+      time: "21:00"
+      timezone: "Asia/Seoul"
+      target-branch: develop
+      labels:
+        - dependencies
