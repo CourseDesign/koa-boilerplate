@@ -10,7 +10,6 @@ import dotenv from "dotenv";
 
 import DependencyInitializer from "./dependency.initializer";
 import router from "./router";
-
 import { Request } from "./middleware";
 
 dotenv.config();
