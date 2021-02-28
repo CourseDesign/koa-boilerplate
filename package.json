@@ -18,7 +18,10 @@
     "postinstall": "husky install"
   },
   "workspaces": [
-    "packages/*"
+    "modules/*",
+    "commons/*",
+    "domains/*",
+    "applications/*"
   ],
   "devDependencies": {
     "@types/jest": "^26.0.20",
