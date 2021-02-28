@@ -15,7 +15,9 @@
     "clean": "lerna run clean",
     "package:publish": "lerna publish",
     "package:init": "./scripts/init-package.sh",
-    "postinstall": "husky install"
+    "postinstall": "husky install",
+    "prepublishOnly": "pinst --disable",
+    "postpublish": "pinst --enable"
   },
   "workspaces": [
     "modules/*",

@@ -1,7 +1,6 @@
 import Router from "koa-router";
 
-import pingPongMiddleware from "../middleware/ping-pong.middleware";
-import { Context } from "../middleware";
+import { Context, pingPongMiddleware } from "../middleware";
 
 const router = new Router<never, Context>();
 
