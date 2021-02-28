@@ -28,7 +28,7 @@ async function bootstrap(port?: number): Promise<Server> {
   application.use(router.routes());
   application.use(router.allowedMethods());
 
-  router.use(snakeCase(response("body")));
+  application.use(snakeCase(response("body")));
 
   return application.listen(port);
 }
