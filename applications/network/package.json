@@ -1,0 +1,36 @@
+{
+  "name": "network",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "author": "",
+  "license": "ISC",
+  "scripts": {
+    "test": "jest",
+    "build": "npm run clean && npm run compile",
+    "clean": "rm -rf ./dist",
+    "compile": "tsc",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "prepublishOnly": "cross-env NODE_ENV=production npm run build"
+  },
+  "dependencies": {
+    "@cheeket/koa": "^1.0.0-alpha.1",
+    "cheeket": "^2.3.4",
+    "dotenv": "^8.2.0",
+    "koa": "^2.13.1",
+    "koa-bodyparser": "^4.3.0",
+    "koa-change-case": "^1.1.0",
+    "koa-position": "^1.0.1",
+    "koa-router": "^10.0.0",
+    "reflect-metadata": "^0.1.13"
+  },
+  "devDependencies": {
+    "@types/koa": "^2.13.0",
+    "@types/koa-bodyparser": "^4.3.0",
+    "@types/koa-router": "^7.4.1",
+    "@types/supertest": "^2.0.10",
+    "supertest": "^6.1.3"
+  }
+}
