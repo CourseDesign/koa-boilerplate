@@ -1,7 +1,7 @@
 {
   "name": "template-default",
   "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "types" : "dist/index.d.ts",
   "scripts": {
     "build": "npm run clean && npm run compile",
     "clean": "rm -rf ./dist",
