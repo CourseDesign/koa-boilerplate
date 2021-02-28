@@ -1,7 +1,9 @@
 {
   "packages": [
-    "packages/*",
-    "examples/*"
+    "modules/*",
+    "commons/*",
+    "domains/*",
+    "applications/*"
   ],
   "version": "0.0.0"
 }
