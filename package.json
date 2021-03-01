@@ -14,7 +14,7 @@
     "postpublish": "pinst --enable"
   },
   "workspaces": [
-    "modules/*",
+    "packages/*",
     "commons/*",
     "domains/*",
     "applications/*"
