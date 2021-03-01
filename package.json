@@ -2,12 +2,6 @@
   "name": "root",
   "private": true,
   "scripts": {
-    "bootstrap": "lerna bootstrap",
-    "bootstrap:hoist": "lerna bootstrap --hoist",
-    "import": "lerna import",
-    "add": "lerna add",
-    "link:convert": "lerna link convert",
-    "create": "lerna create",
     "build": "lerna run build",
     "lint": "lerna run lint --parallel",
     "lint:fix": "lerna run lint:fix --parallel",
