@@ -10,7 +10,6 @@ import dotenv from "dotenv";
 
 import DependencyInitializer from "./dependency.initializer";
 import router from "./router";
-import { Request } from "./middleware";
 
 dotenv.config();
 
@@ -22,7 +21,7 @@ async function bootstrap(port?: number): Promise<Server> {
   );
 
   application.use(bodyParser());
-  application.use(camelCase(request<Request>("body")));
+  application.use(camelCase(request("body")));
 
   application.use(router.routes());
   application.use(router.allowedMethods());
