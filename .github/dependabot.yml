@@ -24,24 +24,24 @@ updates:
       interval: daily
       time: "21:00"
       timezone: "Asia/Seoul"
-      target-branch: develop
-      labels:
-        - dependencies
+    target-branch: develop
+    labels:
+      - dependencies
   - package-ecosystem: npm
     directory: "/domains/*"
     schedule:
       interval: daily
       time: "21:00"
       timezone: "Asia/Seoul"
-      target-branch: develop
-      labels:
-        - dependencies
+    target-branch: develop
+    labels:
+      - dependencies
   - package-ecosystem: npm
     directory: "/applications/*"
     schedule:
       interval: daily
       time: "21:00"
       timezone: "Asia/Seoul"
-      target-branch: develop
-      labels:
-        - dependencies
+    target-branch: develop
+    labels:
+      - dependencies
