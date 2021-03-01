@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
+  "author": "",
+  "license": "ISC",
+  "types": "dist/index.d.ts",
   "scripts": {
     "test": "jest",
     "build": "npm run clean && npm run compile",
@@ -12,7 +15,8 @@
     "lint:fix": "eslint --fix .",
     "prepublishOnly": "cross-env NODE_ENV=production npm run build"
   },
-  "author": "",
-  "license": "ISC",
-  "types": "dist/index.d.ts"
+  "peerDependencies": {
+    "aws-sdk": "^2.x",
+    "cheeket": "^2.3.x"
+  }
 }
