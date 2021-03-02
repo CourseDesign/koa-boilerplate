@@ -15,8 +15,12 @@
     "lint:fix": "eslint --fix .",
     "prepublishOnly": "cross-env NODE_ENV=production npm run build"
   },
+  "devDependencies": {
+    "@types/mock-aws-s3": "^2.6.1"
+  },
   "peerDependencies": {
     "aws-sdk": "^2.x",
-    "cheeket": "^2.3.x"
+    "cheeket": "^2.3.x",
+    "mock-aws-s3": "^4.0.x"
   }
 }
