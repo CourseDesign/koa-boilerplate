@@ -1,7 +1,10 @@
 {
-  "name": "@util/types",
+  "name": "@entity/types",
   "version": "1.0.0",
   "description": "",
+  "author": "",
+  "license": "ISC",
+  "types": "dist/index.d.ts",
   "main": "dist/index.js",
   "scripts": {
     "test": "jest",
@@ -11,8 +14,5 @@
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "prepublishOnly": "cross-env NODE_ENV=production npm run build"
-  },
-  "author": "",
-  "license": "ISC",
-  "types": "dist/index.d.ts"
+  }
 }
