@@ -9,6 +9,7 @@
     "clean": "lerna run clean --parallel",
     "package:publish": "lerna publish",
     "package:init": "./scripts/init-package.sh",
+    "package:sort": "sort-package-json \"**/package.json\"",
     "postinstall": "husky install",
     "prepublishOnly": "pinst --disable",
     "postpublish": "pinst --enable"
