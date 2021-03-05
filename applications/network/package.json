@@ -13,7 +13,7 @@
     "test": "cross-env NODE_ENV=test jest --forceExit",
     "build": "npm run clean && npm run compile",
     "clean": "rm -rf ./dist",
-    "compile": "tsc",
+    "compile": "gulp",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "prepublishOnly": "cross-env NODE_ENV=production npm run build"
