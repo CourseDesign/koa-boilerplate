@@ -7,6 +7,7 @@
   "author": "",
   "license": "ISC",
   "scripts": {
+    "start:prd": "cross-env NODE_ENV=production npm run start",
     "start:dev": "cross-env NODE_ENV=development npm run start",
     "start": "tsc-watch --onSuccess \" node dist/index.js\"",
     "test": "cross-env NODE_ENV=test jest --forceExit",
