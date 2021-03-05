@@ -7,6 +7,9 @@
   "author": "",
   "license": "ISC",
   "scripts": {
+    "start:prd": "cross-env NODE_ENV=production npm run start",
+    "start:dev": "cross-env NODE_ENV=development npm run start",
+    "start": "tsc-watch --onSuccess \" node dist/index.js\"",
     "test": "cross-env NODE_ENV=test jest --forceExit",
     "build": "npm run clean && npm run compile",
     "clean": "rm -rf ./dist",
@@ -31,6 +34,7 @@
     "@types/koa-bodyparser": "^4.3.0",
     "@types/koa-router": "^7.4.1",
     "@types/supertest": "^2.0.10",
+    "tsc-watch": "^4.2.9",
     "supertest": "^6.1.3"
   }
 }
