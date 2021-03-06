@@ -2,18 +2,15 @@ import * as winston from "winston";
 import { inContainerScope, interfaces } from "cheeket";
 import { Initializer } from "@cheeket/koa";
 import {
-  loggerProvider,
-  fileTransportProvider,
   consoleTransportProvider,
+  fileTransportProvider,
+  loggerProvider,
 } from "@cheeket/winston";
 import { override } from "@util/decorator";
-
-import { ParameterizedContext } from "koa";
 import Token from "./token";
-import { State } from "../middleware";
 import childLoggerProvider from "./child-logger.provider";
 
-class DependencyInitializer implements Initializer<State> {
+class DependencyInitializer implements Initializer {
   private readonly errorFileProvider = inContainerScope(
     fileTransportProvider({
       filename: "logs/error.log",
@@ -52,11 +49,7 @@ class DependencyInitializer implements Initializer<State> {
   }
 
   @override
-  initContextContainer(
-    container: interfaces.Container,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    context: ParameterizedContext<State>
-  ): void {
+  initContextContainer(container: interfaces.Container): void {
     container.bind(Token.Logger, this.childLoggerProvider);
   }
 }
