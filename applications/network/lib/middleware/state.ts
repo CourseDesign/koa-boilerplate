@@ -1,3 +1,3 @@
-import { State } from "koa-uuid";
+import { State } from "koa-request-id";
 
 export default State;

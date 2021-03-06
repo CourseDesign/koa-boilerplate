@@ -6,7 +6,7 @@ import dependency from "@cheeket/koa";
 import bodyParser from "koa-bodyparser";
 import { camelCase, snakeCase } from "koa-change-case";
 import { request, response } from "koa-position";
-import uuid from "koa-uuid";
+import requestId from "koa-request-id";
 import dotenv from "dotenv";
 
 import DependencyInitializer from "./dependency.initializer";
@@ -18,7 +18,7 @@ dotenv.config();
 async function bootstrap(port?: number): Promise<Server> {
   const application = new Application();
 
-  application.use(uuid());
+  application.use(requestId());
 
   application.use(
     dependency(new DependencyInitializer(), { maxListeners: 1000 })
