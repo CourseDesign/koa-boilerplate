@@ -5,7 +5,6 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "jest",
-    "build:prd": "cross-env NODE_ENV=production npm run build",
     "build": "npm run clean && npm run compile",
     "clean": "rm -rf ./dist",
     "compile": "gulp",
