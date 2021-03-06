@@ -1,5 +1,5 @@
 {
-  "name": "@cheeket/typeorm",
+  "name": "koa-uuid",
   "version": "1.0.0",
   "description": "",
   "license": "ISC",
@@ -13,10 +13,14 @@
     "compile": "gulp",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "prepublishOnly": "cross-env NODE_ENV=production npm run build"
+    "prepublishOnly": "npm run build:prd"
+  },
+  "devDependencies": {
+    "@types/koa": "^2.13.1",
+    "@types/uuid": "^8.3.0"
   },
   "peerDependencies": {
-    "cheeket": "^2.3.x",
-    "typeorm": "^0.2.x"
+    "koa": "^2.13.x",
+    "uuid": "^8.3.x"
   }
 }

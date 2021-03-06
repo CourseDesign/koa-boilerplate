@@ -1,12 +1,20 @@
 import { Initializer } from "@cheeket/koa";
 import { interfaces } from "cheeket";
+import { override } from "@util/decorator";
+import { LoggerDependencyInitializer } from "./logger";
 
 class DependencyInitializer implements Initializer {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars,class-methods-use-this
-  initRootContainer(container: interfaces.Container): void {}
+  private readonly loggerDependencyInitializer = new LoggerDependencyInitializer();
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars,class-methods-use-this
-  initContextContainer(container: interfaces.Container): void {}
+  @override
+  initRootContainer(container: interfaces.Container): void {
+    this.loggerDependencyInitializer.initRootContainer(container);
+  }
+
+  @override
+  initContextContainer(container: interfaces.Container): void {
+    this.loggerDependencyInitializer.initContextContainer(container);
+  }
 }
 
 export default DependencyInitializer;

@@ -2,9 +2,9 @@
   "name": "@cheeket/aws",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/index.js",
-  "author": "",
   "license": "ISC",
+  "author": "",
+  "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "test": "jest",
