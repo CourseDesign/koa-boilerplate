@@ -19,14 +19,13 @@
     "prepublishOnly": "cross-env NODE_ENV=production npm run build"
   },
   "dependencies": {
+    "@cheeket/koa": "^1.0.0-alpha.1",
+    "@cheeket/winston": "^1.0.0",
     "@entity/types": "^1.0.0",
     "@http/errors": "^1.0.0",
     "@json/convert": "^1.0.0",
     "@util/decorator": "^1.0.0",
     "@util/types": "^1.0.0",
-    "@cheeket/koa": "^1.0.0-alpha.1",
-    "@cheeket/winston": "^1.0.0",
-    "winston": "^3.3.3",
     "cheeket": "^2.3.4",
     "dotenv": "^8.2.0",
     "koa": "^2.13.1",
@@ -34,7 +33,8 @@
     "koa-change-case": "^1.1.0",
     "koa-position": "^1.0.3",
     "koa-router": "^10.0.0",
-    "reflect-metadata": "^0.1.13"
+    "reflect-metadata": "^0.1.13",
+    "winston": "^3.3.3"
   },
   "devDependencies": {
     "@types/koa": "^2.13.0",
