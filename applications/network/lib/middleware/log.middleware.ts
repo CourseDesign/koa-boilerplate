@@ -1,8 +1,9 @@
-import Application, { DefaultState } from "koa";
+import Application from "koa";
 import Context from "./context";
+import State from "./state";
 import { LoggerToken } from "../logger";
 
-const logMiddleware: Application.Middleware<DefaultState, Context> = async (
+const logMiddleware: Application.Middleware<State, Context> = async (
   context,
   next
 ) => {
