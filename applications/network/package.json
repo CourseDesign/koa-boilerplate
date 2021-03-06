@@ -19,7 +19,7 @@
     "prepublishOnly": "cross-env NODE_ENV=production npm run build"
   },
   "dependencies": {
-    "@cheeket/koa": "^1.0.0-alpha.2",
+    "@cheeket/koa": "^1.0.0-alpha.3",
     "@cheeket/winston": "^1.0.0",
     "@entity/types": "^1.0.0",
     "@http/errors": "^1.0.0",
