@@ -2,10 +2,10 @@
   "name": "@entity/types",
   "version": "1.0.0",
   "description": "",
-  "author": "",
   "license": "ISC",
-  "types": "dist/index.d.ts",
+  "author": "",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "test": "jest",
     "build": "npm run clean && npm run compile",

@@ -1,5 +1,5 @@
 {
-  "name": "@http/errors",
+  "name": "@cheekt/winston",
   "version": "1.0.0",
   "description": "",
   "license": "ISC",
@@ -13,6 +13,6 @@
     "compile": "gulp",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "prepublishOnly": "cross-env NODE_ENV=production npm run build"
+    "prepublishOnly": "npm run build:prd"
   }
 }
