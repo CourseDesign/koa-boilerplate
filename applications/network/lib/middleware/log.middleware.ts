@@ -22,8 +22,12 @@ const logMiddleware: Application.Middleware<DefaultState, Context> = async (
 
     logger.http(createHttpMessage());
   } catch (e) {
-    logger.error(createHttpMessage());
-    logger.error(e.toString());
+    if (e.status == null || (e.status >= 500 && e.status < 600)) {
+      logger.error(createHttpMessage());
+      logger.error(e.toString());
+    } else {
+      logger.http(createHttpMessage());
+    }
 
     throw e;
   }
