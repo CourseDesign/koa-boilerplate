@@ -10,6 +10,7 @@ import dotenv from "dotenv";
 
 import DependencyInitializer from "./dependency.initializer";
 import router from "./router";
+import { httpLogMiddleware } from "./middleware";
 
 dotenv.config();
 
@@ -19,6 +20,8 @@ async function bootstrap(port?: number): Promise<Server> {
   application.use(
     dependency(new DependencyInitializer(), { maxListeners: 1000 })
   );
+
+  application.use(httpLogMiddleware);
 
   application.use(bodyParser());
   application.use(camelCase(request("body")));
