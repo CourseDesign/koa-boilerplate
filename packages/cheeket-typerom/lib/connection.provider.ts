@@ -1,6 +1,5 @@
 import { interfaces } from "cheeket";
-import { Connection, createConnection } from "typeorm";
-import { ConnectionOptions } from "typeorm/connection/ConnectionOptions";
+import { Connection, createConnection, ConnectionOptions } from "typeorm";
 
 function connectionProvider(
   options: ConnectionOptions

@@ -2,10 +2,10 @@
   "name": "@cheeket/typeorm",
   "version": "1.0.0",
   "description": "",
-  "author": "",
   "license": "ISC",
-  "types": "dist/index.d.ts",
+  "author": "",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "test": "jest",
     "build": "npm run clean && npm run compile",
@@ -16,7 +16,7 @@
     "prepublishOnly": "cross-env NODE_ENV=production npm run build"
   },
   "peerDependencies": {
-    "typeorm": "^0.2.x",
-    "cheeket": "^2.3.x"
+    "cheeket": "^2.3.x",
+    "typeorm": "^0.2.x"
   }
 }
