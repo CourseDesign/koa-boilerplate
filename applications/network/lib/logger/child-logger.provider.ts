@@ -7,9 +7,12 @@ function childLoggerProvider(
 ): interfaces.Provider<Logger> {
   return async (context) => {
     const logger = await context.resolve(loggerToken);
-    const { state } = await context.resolve(KoaToken.Context);
+    const { state, request } = await context.resolve(KoaToken.Context);
 
     return logger.child({
+      ip: request.ip,
+      url: request.url,
+      method: request.method,
       requestId: state.requestId,
     });
   };

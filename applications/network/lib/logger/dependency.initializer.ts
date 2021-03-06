@@ -29,7 +29,11 @@ class DependencyInitializer implements Initializer {
   private readonly loggerProvider = inContainerScope(
     loggerProvider(Token.Transport, {
       level: process.env.NODE_ENV === "production" ? "info" : "debug",
-      format: winston.format.json(),
+      format: winston.format.combine(
+        winston.format.errors({ stack: true }),
+        winston.format.timestamp(),
+        winston.format.json()
+      ),
     })
   );
 

@@ -8,12 +8,12 @@ const logMiddleware: Application.Middleware<State, Context> = async (
   next
 ) => {
   const logger = await context.resolve(LoggerToken.Logger);
-  const { request, response } = context;
 
   try {
     await next();
-  } finally {
-    logger.http("");
+  } catch (e) {
+    logger.error(e);
+    throw e;
   }
 };
 
