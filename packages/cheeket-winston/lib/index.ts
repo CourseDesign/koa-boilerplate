@@ -1,2 +1,5 @@
-// eslint-disable-next-line import/prefer-default-export
+export { default as fileTransportProvider } from "./file-transport.provider";
+export { default as consoleTransportProvider } from "./console-transport.provider";
+export { default as httpTransportProvider } from "./http-transport.provider";
+
 export { default as loggerProvider } from "./logger.provider";

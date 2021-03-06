@@ -1,24 +1,20 @@
 import { interfaces } from "cheeket";
 import {
   createLogger,
-  LoggerOptions,
   Logger,
-  transports,
-  format,
+  LoggerOptions,
+  transport as Transport,
 } from "winston";
 
-function loggerProvider(options: LoggerOptions): interfaces.Provider<Logger> {
-  return async () => {
-    const logger = createLogger(options);
-    if (process.env.NODE_ENV !== "production") {
-      logger.add(
-        new transports.Console({
-          format: format.simple(),
-        })
-      );
-    }
-
-    return logger;
+function loggerProvider(
+  transportToken: interfaces.Token<Transport>,
+  options?: LoggerOptions
+): interfaces.Provider<Logger> {
+  return async (context) => {
+    return createLogger({
+      transports: await context.resolveAll(transportToken),
+      ...options,
+    });
   };
 }
 
