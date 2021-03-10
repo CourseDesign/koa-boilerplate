@@ -26,6 +26,6 @@
   "peerDependencies": {
     "joi": "^17.4.x",
     "koa": "^2.13.x",
-    "koa-position": "^1.0.x"
+    "koa-position": "^1.1.x"
   }
 }
