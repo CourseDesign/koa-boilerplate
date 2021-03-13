@@ -5,7 +5,6 @@ function s3Provider(
   configuration: AWS.S3.ClientConfiguration
 ): interfaces.Provider<AWS.S3> {
   return () => {
-
     return new AWS.S3(configuration);
   };
 }
