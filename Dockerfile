@@ -1,4 +1,4 @@
-FROM node:14-slim
+FROM node:lts-slim
 
 WORKDIR /app
 
@@ -7,6 +7,7 @@ ENV NODE_ENV production
 
 COPY . .
 
+RUN npm i -g npm
 RUN npm install
 RUN npm run build:prd
 
