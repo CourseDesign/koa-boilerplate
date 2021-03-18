@@ -7,8 +7,8 @@ ENV NODE_ENV production
 
 COPY . .
 
-RUN yarn install --production=true
-RUN yarn run build:production
+RUN npm install
+RUN npm run build:prd
 
-RUN yarn global add pm2
+RUN npm i -g pm2
 ENTRYPOINT ["pm2", "start", "applications/network/dist/index.js", "--no-daemon"]
