@@ -7,9 +7,8 @@ ENV NODE_ENV production
 
 COPY . .
 
-RUN npm i -g npm
-RUN npm install
-RUN npm run build:prd
+RUN ["npm", "i", "-g", "npm"]
+RUN ["npm", "install", "--production", "--ignore-scripts"]
 
-RUN npm i -g pm2
+RUN ["npm", "i", "-g", "pm2"]
 ENTRYPOINT ["pm2", "start", "applications/network/dist/index.js", "--no-daemon"]
