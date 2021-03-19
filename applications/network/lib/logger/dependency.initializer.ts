@@ -6,7 +6,7 @@ import {
   fileTransportProvider,
   loggerProvider,
 } from "@cheeket/winston";
-import { override } from "@util/decorator";
+import { override } from "@course-design/util-decorator";
 import Token from "./token";
 import childLoggerProvider from "./child-logger.provider";
 

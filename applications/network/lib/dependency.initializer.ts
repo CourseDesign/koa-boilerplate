@@ -1,6 +1,6 @@
 import { Initializer } from "@cheeket/koa";
 import { interfaces } from "cheeket";
-import { override } from "@util/decorator";
+import { override } from "@course-design/util-decorator";
 import { LoggerDependencyInitializer } from "./logger";
 
 class DependencyInitializer implements Initializer {
