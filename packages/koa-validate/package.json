@@ -16,7 +16,7 @@
     "prepublishOnly": "npm run build:prd"
   },
   "dependencies": {
-    "@http/errors": "^1.0.0"
+    "http-errors": "^1.8.0"
   },
   "devDependencies": {
     "@types/koa": "^2.13.1",
