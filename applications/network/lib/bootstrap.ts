@@ -6,7 +6,7 @@ import dependency from "@cheeket/koa";
 import bodyParser from "koa-bodyparser";
 import { camelCase, snakeCase } from "koa-change-case";
 import { request, response } from "koa-position";
-import requestId from "koa-request-id";
+import requestId from "koa-requestid";
 import dotenv from "dotenv";
 
 import DependencyInitializer from "./dependency.initializer";
