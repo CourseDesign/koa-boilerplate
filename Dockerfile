@@ -10,6 +10,7 @@ FROM node:lts-slim
 WORKDIR /src/
 EXPOSE 80
 ENV NODE_ENV production
+ENV PORT 80
 COPY --from=builder /src/ .
 RUN ["npm", "i", "-g", "npm", "pm2"]
 RUN ["npm", "i", "--production", "--ignore-scripts"]
