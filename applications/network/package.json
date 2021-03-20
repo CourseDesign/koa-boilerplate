@@ -22,7 +22,6 @@
     "@cheeket/koa": "^1.0.0-alpha.3",
     "@cheeket/winston": "^1.0.0",
     "@entity/types": "^1.0.0",
-    "@http/errors": "^1.0.0",
     "@json/convert": "^1.0.0",
     "@course-design/util-decorator": "^1.0.0",
     "@course-design/util-types": "^1.0.0",

@@ -1,7 +1,7 @@
 import Application from "koa";
 import { Position } from "koa-position";
 import { Schema } from "joi";
-import { BadRequestError } from "@http/errors";
+import { BadRequest } from "http-errors";
 
 function validate(position: Position, schema: Schema): Application.Middleware {
   return async (context, next) => {
@@ -9,7 +9,7 @@ function validate(position: Position, schema: Schema): Application.Middleware {
     try {
       await schema.validateAsync(value);
     } catch (e) {
-      throw new BadRequestError(e.message, e.details);
+      throw new BadRequest(e.message);
     }
 
     await next();
