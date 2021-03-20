@@ -21,7 +21,6 @@
   "dependencies": {
     "@cheeket/koa": "^1.0.0-alpha.3",
     "@cheeket/winston": "^1.0.0",
-    "@entity/types": "^1.0.0",
     "@json/convert": "^1.0.0",
     "@course-design/decorators": "^1.0.1",
     "@course-design/types": "^1.0.2",
