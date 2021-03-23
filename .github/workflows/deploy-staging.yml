@@ -1,0 +1,28 @@
+#on:
+#  push:
+#    branches:
+#      - 'develop'
+#
+#jobs:
+#  deploy-staging:
+#    needs: 'test'
+#
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: Zip project
+#        run: zip -r deploy.zip . -x '*.git*'
+#
+#      - name: Create version label
+#        run: echo "VERSION_LABEL=b_$(date "+%Y-%m-%d")_$(openssl rand -hex 4)" >> $GITHUB_ENV
+#
+#      - name: Deploy to EB
+#        uses: einaregilsson/beanstalk-deploy@v14
+#        with:
+#          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID_STG }}
+#          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY_STG }}
+#          region: ap-northeast-2
+#          version_label: ${{ env.VERSION_LABEL }}
+#          application_name: foobar-project
+#          environment_name: staging
+#          deployment_package: deploy.zip
