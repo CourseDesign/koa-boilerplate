@@ -10,12 +10,6 @@
 #    runs-on: ubuntu-latest
 #
 #    steps:
-#      - name: npm setup
-#        run: npm i -g npm && npm install
-#
-#      - name: Build
-#        run: npm run build:prd
-#
 #      - name: Zip project
 #        run: zip -r deploy.zip . -x '*.git*'
 #
