@@ -39,8 +39,8 @@ async function bootstrap(port?: number): Promise<Server> {
   application.use(router.allowedMethods());
 
   application.use(serialize(response("body")));
-  application.use(expose(query("fields")));
   application.use(snakeCase(response("body")));
+  application.use(expose(query("fields")));
 
   return application.listen(port);
 }
