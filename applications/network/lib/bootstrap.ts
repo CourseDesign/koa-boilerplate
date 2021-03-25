@@ -32,6 +32,7 @@ async function bootstrap(port?: number): Promise<Server> {
   application.use(logMiddleware);
 
   application.use(bodyParser());
+  application.use(camelCase(query()));
   application.use(camelCase(request("body")));
 
   application.use(router.routes());
