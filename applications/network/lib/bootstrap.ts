@@ -5,15 +5,15 @@ import Application from "koa";
 import dependency from "@cheeket/koa";
 import bodyParser from "koa-bodyparser";
 import { camelCase, snakeCase } from "koa-change-case";
-import {query, request, response} from "koa-position";
+import { query, request, response } from "koa-position";
 import requestId from "koa-requestid";
+import serialize from "koa-serialize";
+import expose from "koa-expose";
 import dotenv from "dotenv";
 
 import DependencyInitializer from "./dependency.initializer";
 import router from "./router";
 import { logMiddleware } from "./middleware";
-import serialize from "koa-serialize";
-import expose from "koa-expose";
 
 dotenv.config();
 
