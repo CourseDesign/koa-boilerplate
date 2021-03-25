@@ -29,6 +29,8 @@
     "jsonlike": "^1.0.0",
     "koa": "^2.13.1",
     "koa-bodyparser": "^4.3.0",
+    "koa-serialize": "^1.0.1",
+    "koa-expose": "^1.0.0",
     "koa-change-case": "^1.1.1",
     "koa-position": "^1.1.6",
     "koa-requestid": "^2.1.0",

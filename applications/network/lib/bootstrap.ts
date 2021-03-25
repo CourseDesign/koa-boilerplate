@@ -5,13 +5,15 @@ import Application from "koa";
 import dependency from "@cheeket/koa";
 import bodyParser from "koa-bodyparser";
 import { camelCase, snakeCase } from "koa-change-case";
-import { request, response } from "koa-position";
+import {query, request, response} from "koa-position";
 import requestId from "koa-requestid";
 import dotenv from "dotenv";
 
 import DependencyInitializer from "./dependency.initializer";
 import router from "./router";
 import { logMiddleware } from "./middleware";
+import serialize from "koa-serialize";
+import expose from "koa-expose";
 
 dotenv.config();
 
@@ -32,6 +34,8 @@ async function bootstrap(port?: number): Promise<Server> {
   application.use(router.routes());
   application.use(router.allowedMethods());
 
+  application.use(serialize(response("body")));
+  application.use(expose(query("fields")));
   application.use(snakeCase(response("body")));
 
   return application.listen(port);
