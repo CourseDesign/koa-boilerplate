@@ -29,6 +29,7 @@
     "jsonlike": "^1.0.0",
     "koa": "^2.13.1",
     "koa-bodyparser": "^4.3.0",
+    "koa-qs": "^3.0.0",
     "koa-serialize": "^1.0.1",
     "koa-expose": "^1.0.0",
     "koa-change-case": "^1.1.1",
@@ -42,6 +43,7 @@
   },
   "devDependencies": {
     "@types/koa": "^2.13.0",
+    "@types/koa-qs": "^2.0.0",
     "@types/koa-bodyparser": "^4.3.0",
     "@types/koa-router": "^7.4.1",
     "@types/supertest": "^2.0.10",

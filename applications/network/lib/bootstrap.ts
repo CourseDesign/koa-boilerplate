@@ -3,6 +3,7 @@ import "reflect-metadata";
 import { Server } from "net";
 import Application from "koa";
 import dependency from "@cheeket/koa";
+import koaQs from "koa-qs";
 import bodyParser from "koa-bodyparser";
 import { camelCase, snakeCase } from "koa-change-case";
 import { query, request, response } from "koa-position";
@@ -19,6 +20,8 @@ dotenv.config();
 
 async function bootstrap(port?: number): Promise<Server> {
   const application = new Application();
+
+  koaQs(application);
 
   application.use(requestId());
 
