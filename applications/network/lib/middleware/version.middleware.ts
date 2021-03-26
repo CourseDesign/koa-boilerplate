@@ -4,7 +4,7 @@ import { Commit, getLastCommit } from "git-last-commit";
 import Context from "./context";
 import State from "./state";
 
-const START_TIME = Date.now();
+const START_TIME = new Date();
 
 function findLastCommit(): Promise<Commit | undefined> {
   return new Promise<Commit | undefined>((resolve) => {
