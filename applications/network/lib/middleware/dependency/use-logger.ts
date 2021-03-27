@@ -44,7 +44,7 @@ function useLogger(token: Token): Application.Middleware<State, Context> {
     childLoggerProvider(token.rootLogger)
   );
 
-  return async (context, next) => {
+  function initDependency(context: Context): void {
     if (!context.containers.root.isBound(token.transport)) {
       context.containers.root.bind(token.transport, errorFileProvider);
       context.containers.root.bind(token.transport, combinedFileProvider);
@@ -61,6 +61,10 @@ function useLogger(token: Token): Application.Middleware<State, Context> {
     if (!context.containers.context.isBound(token.logger)) {
       context.containers.context.bind(token.logger, containerLoggerProvider);
     }
+  }
+
+  return async (context, next) => {
+    initDependency(context);
 
     const logger = await context.resolve(token.logger);
 
