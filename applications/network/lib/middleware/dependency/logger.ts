@@ -72,7 +72,10 @@ function logger(token: Token): Application.Middleware<State, Context> {
     try {
       await next();
     } catch (e) {
-      logger.error(e);
+      const status = e.status ?? e.statusCode ?? 500;
+      if (status >= 500 && status < 600) {
+        logger.error(e);
+      }
       throw e;
     }
   };
