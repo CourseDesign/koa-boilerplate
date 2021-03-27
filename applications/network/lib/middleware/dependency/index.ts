@@ -1,1 +1,2 @@
-export { default as logger, Token as LoggerToken } from "./logger";
+export { default as logger } from "./logger.middleware";
+export { default as LoggerToken } from "./logger.token";
