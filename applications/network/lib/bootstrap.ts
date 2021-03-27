@@ -14,7 +14,8 @@ import expose from "koa-expose";
 import dotenv from "dotenv";
 
 import router from "./router";
-import { logMiddleware } from "./middleware";
+import token from "./token";
+import { useLogger } from "./middleware";
 
 dotenv.config();
 
@@ -32,7 +33,7 @@ async function bootstrap(
     dependency(container ?? new Container(), { maxListeners: 1000 })
   );
 
-  application.use(logMiddleware);
+  application.use(useLogger(token));
 
   application.use(bodyParser());
   application.use(camelCase(query()));

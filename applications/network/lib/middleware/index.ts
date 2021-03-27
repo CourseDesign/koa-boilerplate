@@ -4,4 +4,4 @@ export { default as State } from "./state";
 export { default as pingPongMiddleware } from "./ping-pong.middleware";
 export { default as versionMiddleware } from "./version.middleware";
 
-export { default as logMiddleware } from "./log.middleware";
+export * from "./dependency";
