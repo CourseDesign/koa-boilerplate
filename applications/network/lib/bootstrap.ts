@@ -1,8 +1,9 @@
 import "reflect-metadata";
 
 import { Server } from "net";
-import Application from "koa";
+import { Container, interfaces } from "cheeket";
 import dependency from "@cheeket/koa";
+import Application from "koa";
 import koaQs from "koa-qs";
 import bodyParser from "koa-bodyparser";
 import { camelCase, snakeCase } from "koa-change-case";
@@ -12,13 +13,15 @@ import serialize from "koa-serialize";
 import expose from "koa-expose";
 import dotenv from "dotenv";
 
-import DependencyInitializer from "./dependency.initializer";
 import router from "./router";
 import { logMiddleware } from "./middleware";
 
 dotenv.config();
 
-async function bootstrap(port?: number): Promise<Server> {
+async function bootstrap(
+  port?: number,
+  container?: interfaces.Container
+): Promise<Server> {
   const application = new Application();
 
   koaQs(application);
@@ -26,7 +29,7 @@ async function bootstrap(port?: number): Promise<Server> {
   application.use(requestId());
 
   application.use(
-    dependency(new DependencyInitializer(), { maxListeners: 1000 })
+    dependency(container ?? new Container(), { maxListeners: 1000 })
   );
 
   application.use(logMiddleware);
