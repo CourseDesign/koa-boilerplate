@@ -5,11 +5,15 @@ import {
   fileTransportProvider,
   loggerProvider,
 } from "@cheeket/winston";
-import LoggerToken from "./logger.token";
-import Context from "../context";
-import childLoggerProvider from "./child-logger.provider";
+import { ContainerContext, DependencyInitializer } from "@cheeket/koa";
+import { override } from "@course-design/decorators";
+import { ParameterizedContext } from "koa";
 
-class LoggerDependencyInitializer {
+import LoggerToken from "./logger.token";
+import childLoggerProvider from "./child-logger.provider";
+import State from "../state";
+
+class LoggerDependencyInitializer implements DependencyInitializer {
   private readonly errorFileProvider: interfaces.Provider<winston.transport>;
 
   private readonly combinedFileProvider: interfaces.Provider<winston.transport>;
@@ -48,7 +52,8 @@ class LoggerDependencyInitializer {
     );
   }
 
-  init(context: Context): void {
+  @override
+  init(context: ParameterizedContext<State, ContainerContext>): void {
     if (!context.containers.root.isBound(this.token.transport)) {
       context.containers.root.bind(
         this.token.transport,

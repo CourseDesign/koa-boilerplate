@@ -1,15 +1,13 @@
 import Application from "koa";
+import { use } from "@cheeket/koa";
+
 import Context from "../context";
 import State from "../state";
 import LoggerDependencyInitializer from "./logger.dependency-initializer";
 import LoggerToken from "./logger.token";
 
 function logger(token: LoggerToken): Application.Middleware<State, Context> {
-  const dependencyInitializer = new LoggerDependencyInitializer(token);
-
-  return async (context, next) => {
-    dependencyInitializer.init(context);
-
+  return use(new LoggerDependencyInitializer(token), async (context, next) => {
     // eslint-disable-next-line @typescript-eslint/no-shadow
     const logger = await context.resolve(token.logger);
 
@@ -22,7 +20,7 @@ function logger(token: LoggerToken): Application.Middleware<State, Context> {
       }
       throw e;
     }
-  };
+  });
 }
 
 export default logger;
