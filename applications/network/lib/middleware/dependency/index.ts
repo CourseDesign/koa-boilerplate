@@ -1,1 +1,1 @@
-export { default as useLogger, Token as LoggerToken } from "./use-logger";
+export { default as logger, Token as LoggerToken } from "./logger";

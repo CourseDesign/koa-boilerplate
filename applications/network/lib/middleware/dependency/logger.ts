@@ -17,7 +17,7 @@ export type Token = {
   transport: interfaces.Token<Transport>;
 };
 
-function useLogger(token: Token): Application.Middleware<State, Context> {
+function logger(token: Token): Application.Middleware<State, Context> {
   const errorFileProvider = inContainerScope(
     fileTransportProvider({
       filename: "logs/error.log",
@@ -66,6 +66,7 @@ function useLogger(token: Token): Application.Middleware<State, Context> {
   return async (context, next) => {
     initDependency(context);
 
+    // eslint-disable-next-line @typescript-eslint/no-shadow
     const logger = await context.resolve(token.logger);
 
     try {
@@ -77,4 +78,4 @@ function useLogger(token: Token): Application.Middleware<State, Context> {
   };
 }
 
-export default useLogger;
+export default logger;
