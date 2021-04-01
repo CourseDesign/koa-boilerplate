@@ -1,4 +1,4 @@
-import { inContainerScope, interfaces } from "cheeket";
+import { inContainerScope } from "cheeket";
 import * as winston from "winston";
 import {
   consoleTransportProvider,
@@ -14,43 +14,35 @@ import childLoggerProvider from "./child-logger.provider";
 import State from "../state";
 
 class LoggerDependencyInitializer implements DependencyInitializer {
-  private readonly errorFileProvider: interfaces.Provider<winston.transport>;
+  private readonly errorFileProvider = inContainerScope(
+    fileTransportProvider({
+      filename: "logs/error.log",
+      level: "error",
+    })
+  );
 
-  private readonly combinedFileProvider: interfaces.Provider<winston.transport>;
+  private readonly combinedFileProvider = inContainerScope(
+    fileTransportProvider({ filename: "logs/combined.log" })
+  );
 
-  private readonly simpleConsoleTransportProvider: interfaces.Provider<winston.transport>;
+  private readonly simpleConsoleTransportProvider = inContainerScope(
+    consoleTransportProvider({ format: winston.format.simple() })
+  );
 
-  private readonly rootLoggerProvider: interfaces.Provider<winston.Logger>;
+  private readonly rootLoggerProvider = inContainerScope(
+    loggerProvider(LoggerToken.Transport, {
+      level: process.env.NODE_ENV === "production" ? "info" : "debug",
+      format: winston.format.combine(
+        winston.format.errors({ stack: true }),
+        winston.format.timestamp(),
+        winston.format.json()
+      ),
+    })
+  );
 
-  private readonly containerLoggerProvider: interfaces.Provider<winston.Logger>;
-
-  constructor() {
-    this.errorFileProvider = inContainerScope(
-      fileTransportProvider({
-        filename: "logs/error.log",
-        level: "error",
-      })
-    );
-    this.combinedFileProvider = inContainerScope(
-      fileTransportProvider({ filename: "logs/combined.log" })
-    );
-    this.simpleConsoleTransportProvider = inContainerScope(
-      consoleTransportProvider({ format: winston.format.simple() })
-    );
-    this.rootLoggerProvider = inContainerScope(
-      loggerProvider(LoggerToken.Transport, {
-        level: process.env.NODE_ENV === "production" ? "info" : "debug",
-        format: winston.format.combine(
-          winston.format.errors({ stack: true }),
-          winston.format.timestamp(),
-          winston.format.json()
-        ),
-      })
-    );
-    this.containerLoggerProvider = inContainerScope(
-      childLoggerProvider(LoggerToken.RootLogger)
-    );
-  }
+  private readonly containerLoggerProvider = inContainerScope(
+    childLoggerProvider(LoggerToken.RootLogger)
+  );
 
   @override
   init(context: ParameterizedContext<State, ContainerContext>): void {
