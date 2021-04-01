@@ -24,7 +24,7 @@ class LoggerDependencyInitializer implements DependencyInitializer {
 
   private readonly containerLoggerProvider: interfaces.Provider<winston.Logger>;
 
-  constructor(private readonly token: LoggerToken) {
+  constructor() {
     this.errorFileProvider = inContainerScope(
       fileTransportProvider({
         filename: "logs/error.log",
@@ -38,7 +38,7 @@ class LoggerDependencyInitializer implements DependencyInitializer {
       consoleTransportProvider({ format: winston.format.simple() })
     );
     this.rootLoggerProvider = inContainerScope(
-      loggerProvider(token.transport, {
+      loggerProvider(LoggerToken.Transport, {
         level: process.env.NODE_ENV === "production" ? "info" : "debug",
         format: winston.format.combine(
           winston.format.errors({ stack: true }),
@@ -48,37 +48,37 @@ class LoggerDependencyInitializer implements DependencyInitializer {
       })
     );
     this.containerLoggerProvider = inContainerScope(
-      childLoggerProvider(token.rootLogger)
+      childLoggerProvider(LoggerToken.RootLogger)
     );
   }
 
   @override
   init(context: ParameterizedContext<State, ContainerContext>): void {
-    if (!context.containers.root.isBound(this.token.transport)) {
+    if (!context.containers.root.isBound(LoggerToken.Transport)) {
       context.containers.root.bind(
-        this.token.transport,
+        LoggerToken.Transport,
         this.errorFileProvider
       );
       context.containers.root.bind(
-        this.token.transport,
+        LoggerToken.Transport,
         this.combinedFileProvider
       );
       if (process.env.NODE_ENV !== "production") {
         context.containers.root.bind(
-          this.token.transport,
+          LoggerToken.Transport,
           this.simpleConsoleTransportProvider
         );
       }
     }
-    if (!context.containers.root.isBound(this.token.rootLogger)) {
+    if (!context.containers.root.isBound(LoggerToken.RootLogger)) {
       context.containers.root.bind(
-        this.token.rootLogger,
+        LoggerToken.RootLogger,
         this.rootLoggerProvider
       );
     }
-    if (!context.containers.context.isBound(this.token.logger)) {
+    if (!context.containers.context.isBound(LoggerToken.Logger)) {
       context.containers.context.bind(
-        this.token.logger,
+        LoggerToken.Logger,
         this.containerLoggerProvider
       );
     }
