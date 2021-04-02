@@ -6,10 +6,10 @@ import State from "../state";
 import LoggerDependencyInitializer from "./logger.dependency-initializer";
 import LoggerToken from "./logger.token";
 
-function logger(token: LoggerToken): Application.Middleware<State, Context> {
-  return use(new LoggerDependencyInitializer(token), async (context, next) => {
+function logger(): Application.Middleware<State, Context> {
+  return use(new LoggerDependencyInitializer(), async (context, next) => {
     // eslint-disable-next-line @typescript-eslint/no-shadow
-    const logger = await context.resolve(token.logger);
+    const logger = await context.resolve(LoggerToken.Logger);
 
     try {
       await next();
