@@ -1,7 +1,7 @@
 {
   "name": "template-default",
   "main": "dist/index.js",
-  "types" : "dist/index.d.ts",
+  "types": "dist/index.d.ts",
   "scripts": {
     "build:prd": "cross-env NODE_ENV=production npm run build",
     "build": "npm run clean && npm run compile",

@@ -1,3 +1,5 @@
+# Created by .ignore support plugin (hsz.mobi)
+### Node template
 # Logs
 logs
 *.log
@@ -28,7 +30,7 @@ coverage
 # Grunt intermediate storage (https://gruntjs.com/creating-plugins#storing-task-files)
 .grunt
 
-# Bower logger directory (https://bower.io/)
+# Bower dependency directory (https://bower.io/)
 bower_components
 
 # node-waf configuration
@@ -41,7 +43,7 @@ build/Release
 node_modules/
 jspm_packages/
 
-# Snowpack logger directory (https://snowpack.dev/)
+# Snowpack dependency directory (https://snowpack.dev/)
 web_modules/
 
 # TypeScript cache
@@ -115,5 +117,5 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-# intelliJ
-.idea/
+.github
+.idea

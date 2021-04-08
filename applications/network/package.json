@@ -2,16 +2,15 @@
   "name": "network",
   "version": "0.0.0",
   "description": "",
+  "license": "ISC",
+  "author": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "author": "",
-  "license": "ISC",
   "scripts": {
     "start:prd": "cross-env NODE_ENV=production npm run start",
     "start:dev": "cross-env NODE_ENV=development tsc-watch --onSuccess \"npm run start\"",
     "start": "node dist/index.js",
     "test": "cross-env NODE_ENV=test jest --forceExit",
-    "build:prd": "cross-env NODE_ENV=production npm run build",
     "build": "npm run clean && npm run compile",
     "clean": "rm -rf ./dist",
     "compile": "gulp",
@@ -20,22 +19,36 @@
     "prepublishOnly": "cross-env NODE_ENV=production npm run build"
   },
   "dependencies": {
-    "@cheeket/koa": "^1.0.0-alpha.1",
-    "cheeket": "^2.3.4",
+    "@cheeket/koa": "^2.1.0",
+    "@cheeket/winston": "^1.0.1",
+    "@course-design/decorators": "^1.0.1",
+    "@course-design/types": "^1.0.2",
+    "cheeket": "^2.3.7",
     "dotenv": "^8.2.0",
+    "git-last-commit": "^1.0.0",
+    "joi": "^17.4.0",
+    "jsonlike": "^1.0.0",
     "koa": "^2.13.1",
     "koa-bodyparser": "^4.3.0",
-    "koa-change-case": "^1.1.0",
-    "koa-position": "^1.0.3",
+    "koa-change-case": "^1.1.1",
+    "koa-expose": "^1.0.0",
+    "koa-position": "^1.1.6",
+    "koa-qs": "^3.0.0",
+    "koa-requestid": "^2.1.0",
     "koa-router": "^10.0.0",
-    "reflect-metadata": "^0.1.13"
+    "koa-serialize": "^1.0.1",
+    "koa-verify": "^1.0.0",
+    "koa-verify-joi": "^1.0.0",
+    "reflect-metadata": "^0.1.13",
+    "winston": "^3.3.3"
   },
   "devDependencies": {
     "@types/koa": "^2.13.0",
     "@types/koa-bodyparser": "^4.3.0",
+    "@types/koa-qs": "^2.0.0",
     "@types/koa-router": "^7.4.1",
     "@types/supertest": "^2.0.10",
-    "tsc-watch": "^4.2.9",
-    "supertest": "^6.1.3"
+    "supertest": "^6.1.3",
+    "tsc-watch": "^4.2.9"
   }
 }
