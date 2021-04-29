@@ -1,5 +1,5 @@
 import Router from "koa-router";
-import { Context } from "../middleware";
+import Context from "../context";
 
 import pigPongRoutes from "./ping-pong.routes";
 import versionRoutes from "./version.routes";

@@ -1,6 +1,7 @@
 import Router from "koa-router";
 
-import { Context, versionMiddleware } from "../middleware";
+import Context from "../context";
+import { versionMiddleware } from "../middleware";
 
 function versionRoutes(): Router<never, Context> {
   const router = new Router<never, Context>();

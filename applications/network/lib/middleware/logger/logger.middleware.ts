@@ -1,8 +1,8 @@
 import Application from "koa";
 import { use } from "@cheeket/koa";
 
-import Context from "../context";
-import State from "../state";
+import Context from "../../context";
+import State from "../../state";
 import LoggerDependencyInitializer from "./logger.dependency-initializer";
 import LoggerToken from "./logger.token";
 

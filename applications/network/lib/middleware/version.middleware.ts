@@ -1,8 +1,8 @@
 import Application from "koa";
 import { Commit, getLastCommit } from "git-last-commit";
 
-import Context from "./context";
-import State from "./state";
+import Context from "../context";
+import State from "../state";
 
 const START_TIME = new Date();
 
