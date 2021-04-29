@@ -28,9 +28,8 @@ async function bootstrap(
 
   application.use(requestId());
 
-  application.use(
-    dependency(container ?? new Container(), { maxListeners: 1000 })
-  );
+  const rootContainer = container ?? new Container();
+  application.use(dependency(rootContainer, { maxListeners: 1000 }));
 
   application.use(logger());
 
