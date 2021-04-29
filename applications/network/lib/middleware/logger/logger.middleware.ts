@@ -10,6 +10,9 @@ function logger(): Application.Middleware<State, Context> {
   return use(new LoggerDependencyInitializer(), async (context, next) => {
     // eslint-disable-next-line @typescript-eslint/no-shadow
     const logger = await context.resolve(LoggerToken.Logger);
+    if (context.logger == null) {
+      context.logger = logger;
+    }
 
     try {
       await next();
