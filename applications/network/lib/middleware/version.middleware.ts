@@ -15,17 +15,22 @@ function findLastCommit(): Promise<Commit | undefined> {
   });
 }
 
-const versionMiddleware: Application.Middleware<State, Context> = async (
-  context,
-  next
-) => {
-  context.body = {
-    version: process.env.npm_package_version,
-    commit: (await findLastCommit())?.hash,
-    startTime: START_TIME,
+function version(): Application.Middleware<State, Context> {
+  let commit: string | undefined;
+
+  return async (context, next) => {
+    if (commit == null) {
+      commit = (await findLastCommit())?.hash;
+    }
+
+    context.body = {
+      version: process.env.npm_package_version,
+      commit: commit,
+      startTime: START_TIME,
+    };
+
+    await next();
   };
+}
 
-  await next();
-};
-
-export default versionMiddleware;
+export default version;

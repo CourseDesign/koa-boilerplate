@@ -2,12 +2,11 @@ import Application from "koa";
 import Context from "../context";
 import State from "../state";
 
-const pingPongMiddleware: Application.Middleware<State, Context> = async (
-  context,
-  next
-) => {
-  context.body = "pong";
-  await next();
-};
+function pingPong(): Application.Middleware<State, Context> {
+  return async (context, next) => {
+    context.body = "pong";
+    await next();
+  };
+}
 
-export default pingPongMiddleware;
+export default pingPong;
