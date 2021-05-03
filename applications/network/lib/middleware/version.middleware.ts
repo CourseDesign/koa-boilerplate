@@ -25,7 +25,7 @@ function version(): Application.Middleware<State, Context> {
 
     context.body = {
       version: process.env.npm_package_version,
-      commit: commit,
+      commit,
       startTime: START_TIME,
     };
 
