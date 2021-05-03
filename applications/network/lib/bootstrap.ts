@@ -13,7 +13,7 @@ import serialize from "koa-serialize";
 import expose from "koa-expose";
 import dotenv from "dotenv";
 
-import router from "./router";
+import routes from "./routes";
 import { logger } from "./middleware";
 
 dotenv.config();
@@ -28,9 +28,8 @@ async function bootstrap(
 
   application.use(requestId());
 
-  application.use(
-    dependency(container ?? new Container(), { maxListeners: 1000 })
-  );
+  const rootContainer = container ?? new Container();
+  application.use(dependency(rootContainer, { maxListeners: 1000 }));
 
   application.use(logger());
 
@@ -38,6 +37,7 @@ async function bootstrap(
   application.use(camelCase(query()));
   application.use(camelCase(request("body")));
 
+  const router = routes();
   application.use(router.routes());
   application.use(router.allowedMethods());
 

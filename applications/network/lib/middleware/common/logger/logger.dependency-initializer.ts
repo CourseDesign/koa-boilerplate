@@ -11,7 +11,7 @@ import { ParameterizedContext } from "koa";
 
 import LoggerToken from "./logger.token";
 import childLoggerProvider from "./child-logger.provider";
-import State from "../state";
+import State from "../../../state";
 
 class LoggerDependencyInitializer implements DependencyInitializer {
   private readonly errorFileProvider = inContainerScope(

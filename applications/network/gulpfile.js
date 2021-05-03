@@ -33,7 +33,7 @@ function getFinalTsConfig(config, currentPath) {
 }
 
 function getTsconfig(tsProject) {
-  return getFinalTsConfig(tsProject.rawConfig, tsProject.projectDirectory)
+  return getFinalTsConfig(tsProject.rawConfig, tsProject.projectDirectory);
 }
 
 const tsProject = ts.createProject(getTsconfigName());
