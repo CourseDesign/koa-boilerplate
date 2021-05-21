@@ -1,4 +1,5 @@
 import bootstrap from "./bootstrap";
+import ConfigurationProvider from "./configuration-provider";
 
-const port = process.env.PORT !== undefined ? Number(process.env.PORT) : 8080;
-bootstrap(port).then(() => {});
+const configProvider = new ConfigurationProvider({ port: 8080 });
+bootstrap(configProvider.get()).then(() => {});
