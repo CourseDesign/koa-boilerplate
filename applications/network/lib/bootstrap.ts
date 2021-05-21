@@ -11,24 +11,23 @@ import { query, request, response } from "koa-position";
 import requestId from "koa-requestid";
 import serialize from "koa-serialize";
 import expose from "koa-expose";
-import dotenv from "dotenv";
 
 import routes from "./routes";
 import { logger } from "./middleware";
 
-dotenv.config();
+export interface ApplicationConfiguration {
+  port?: number;
+  container?: interfaces.Container;
+}
 
-async function bootstrap(
-  port?: number,
-  container?: interfaces.Container
-): Promise<Server> {
+async function bootstrap(config: ApplicationConfiguration): Promise<Server> {
   const application = new Application();
 
   koaQs(application);
 
   application.use(requestId());
 
-  const rootContainer = container ?? new Container();
+  const rootContainer = config.container ?? new Container();
   application.use(dependency(rootContainer, { maxListeners: 1000 }));
 
   application.use(logger());
@@ -45,7 +44,7 @@ async function bootstrap(
   application.use(snakeCase(response("body")));
   application.use(expose(query("fields")));
 
-  return application.listen(port);
+  return application.listen(config.port);
 }
 
 export default bootstrap;
