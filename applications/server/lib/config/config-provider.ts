@@ -20,7 +20,7 @@ class ConfigProvider {
 
     builder
       .addSource(jsonSource)
-      .addEnv("env", "custom", "default")
+      .addEnv("default", "custom", "env")
       .setOptions({ isMergeableObject: isPlainObject });
 
     this.config = builder.build();
