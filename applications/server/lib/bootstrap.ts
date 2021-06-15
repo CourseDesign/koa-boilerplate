@@ -1,7 +1,6 @@
 import "reflect-metadata";
 
 import { Server } from "net";
-import { Container } from "cheeket";
 import { dependency } from "@cheeket/koa";
 import Application from "koa";
 import koaQs from "koa-qs";
@@ -14,13 +13,9 @@ import expose from "koa-expose";
 
 import routes from "./routes";
 import { logger } from "./module";
+import { Config } from "./config";
 
-export interface ApplicationConfiguration {
-  port?: number;
-  container?: Container;
-}
-
-async function bootstrap(config: ApplicationConfiguration): Promise<Server> {
+async function bootstrap(config: Config): Promise<Server> {
   const application = new Application();
 
   koaQs(application);

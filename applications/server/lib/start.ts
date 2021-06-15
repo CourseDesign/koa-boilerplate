@@ -1,5 +1,5 @@
 import bootstrap from "./bootstrap";
-import ConfigurationProvider from "./configuration-provider";
+import { ConfigProvider } from "./config";
 
-const configProvider = new ConfigurationProvider({ port: 8080 });
+const configProvider = new ConfigProvider();
 bootstrap(configProvider.get()).then(() => {});
