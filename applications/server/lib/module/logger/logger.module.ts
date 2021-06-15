@@ -43,7 +43,7 @@ class LoggerModule implements Module {
     contextLoggerProvider(LoggerTokens.RootLogger)
   );
 
-  configureContext(container: Container): void {
+  configureRoot(container: Container): void {
     container.bind(LoggerTokens.Transports, this.errorFileTransportProvider);
     container.bind(LoggerTokens.Transports, this.combinedFileTransportProvider);
     if (process.env.NODE_ENV !== "production") {
@@ -55,7 +55,7 @@ class LoggerModule implements Module {
     container.bind(LoggerTokens.RootLogger, this.rootLoggerProvider);
   }
 
-  configureRoot(container: Container): void {
+  configureContext(container: Container): void {
     container.bind(LoggerTokens.Logger, this.contextLoggerProvider);
   }
 }

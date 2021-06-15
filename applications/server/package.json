@@ -17,7 +17,6 @@
     "prepublishOnly": "cross-env NODE_ENV=production npm run build"
   },
   "dependencies": {
-    "koa-compose": "^4.1.0",
     "@cheeket/koa": "^3.0.1",
     "@course-design/decorators": "^1.0.1",
     "@course-design/types": "^1.0.2",
@@ -29,6 +28,7 @@
     "koa": "^2.13.1",
     "koa-bodyparser": "^4.3.0",
     "koa-change-case": "^1.1.1",
+    "koa-compose": "^4.1.0",
     "koa-expose": "^1.0.0",
     "koa-position": "^1.1.6",
     "koa-qs": "^3.0.0",
