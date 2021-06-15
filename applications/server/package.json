@@ -37,6 +37,7 @@
     "koa-serialize": "^1.0.1",
     "koa-verify": "^1.0.1",
     "koa-verify-joi": "^1.0.1",
+    "object-change-case": "^1.0.0",
     "reflect-metadata": "^0.1.13",
     "winston": "^3.3.3"
   },

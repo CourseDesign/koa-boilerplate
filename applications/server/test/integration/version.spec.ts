@@ -1,5 +1,5 @@
 import supertest from "supertest";
-import { camelCase } from "koa-change-case";
+import { camelCase } from "object-change-case";
 
 import createRequest from "../create-request";
 
@@ -13,7 +13,7 @@ describe("GET /version", () => {
   test("success", async () => {
     const result = await request.get("/version").expect(200);
 
-    const json = camelCase.convert(result.body) as Record<string, unknown>;
+    const json = camelCase(result.body) as Record<string, unknown>;
     expect(json.version).toEqual(process.env.npm_package_version);
     expect(json.startTime).toBeTruthy();
   });
