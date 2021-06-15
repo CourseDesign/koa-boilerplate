@@ -1,9 +1,10 @@
 import supertest from "supertest";
 
-import { bootstrap } from "../lib";
+import { bootstrap, ConfigProvider } from "../lib";
 
 async function createRequest(): Promise<supertest.SuperTest<supertest.Test>> {
-  const server = await bootstrap({});
+  const configProvider = new ConfigProvider({ port: undefined });
+  const server = await bootstrap(configProvider.get());
   return supertest(server);
 }
 
