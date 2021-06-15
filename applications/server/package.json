@@ -1,5 +1,5 @@
 {
-  "name": "network",
+  "name": "server",
   "version": "0.0.0",
   "description": "",
   "license": "ISC",
@@ -7,9 +7,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "start:prd": "cross-env NODE_ENV=production npm run start",
-    "start:dev": "cross-env NODE_ENV=development tsc-watch --onSuccess \"npm run start\"",
-    "start": "node dist/index.js",
+    "start": "node dist/start.js",
     "test": "cross-env NODE_ENV=test jest --forceExit",
     "build": "npm run clean && npm run compile",
     "clean": "rm -rf ./dist",
@@ -19,11 +17,10 @@
     "prepublishOnly": "cross-env NODE_ENV=production npm run build"
   },
   "dependencies": {
-    "@cheeket/koa": "^2.1.0",
-    "@cheeket/winston": "^1.0.1",
+    "@cheeket/koa": "^3.0.1",
     "@course-design/decorators": "^1.0.1",
     "@course-design/types": "^1.0.2",
-    "cheeket": "^2.3.7",
+    "cheeket": "^3.0.0",
     "dotenv": "^10.0.0",
     "git-last-commit": "^1.0.0",
     "joi": "^17.4.0",
@@ -31,6 +28,7 @@
     "koa": "^2.13.1",
     "koa-bodyparser": "^4.3.0",
     "koa-change-case": "^1.1.1",
+    "koa-compose": "^4.1.0",
     "koa-expose": "^1.0.0",
     "koa-position": "^1.1.6",
     "koa-qs": "^3.0.0",
@@ -45,6 +43,7 @@
   "devDependencies": {
     "@types/koa": "^2.13.0",
     "@types/koa-bodyparser": "^4.3.0",
+    "@types/koa-compose": "^3.2.5",
     "@types/koa-qs": "^2.0.0",
     "@types/koa-router": "^7.4.1",
     "@types/supertest": "^2.0.10",
