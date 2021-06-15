@@ -1,9 +1,10 @@
 import { Module } from "@cheeket/koa";
 import { Container, inContainerScope } from "cheeket";
 import * as winston from "winston";
+
 import LoggerTokens from "./logger.tokens";
-import contextLoggerProvider from "./provider/context-logger.provider";
 import {
+  contextLoggerProvider,
   consoleTransportProvider,
   fileTransportProvider,
   loggerProvider,
