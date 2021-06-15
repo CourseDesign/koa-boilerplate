@@ -4,7 +4,7 @@ COPY . .
 RUN apt update && apt install -y libvips
 RUN ["npm", "i", "-g", "npm"]
 RUN ["npm", "ci"]
-RUN ["npm", "run", "build:prd"]
+RUN ["npm", "run", "build"]
 RUN ["npm", "run", "prepublishOnly"]
 RUN find . \( -name lib -o -name test -o -path ./node_modules \) -prune -exec rm -r {} \;
 
