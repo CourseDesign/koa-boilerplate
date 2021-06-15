@@ -1,7 +1,6 @@
 import "reflect-metadata";
 
 import { Server } from "net";
-import { dependency } from "@cheeket/koa";
 import Application from "koa";
 import koaQs from "koa-qs";
 import bodyParser from "koa-bodyparser";
@@ -10,6 +9,7 @@ import { query, request, response } from "koa-position";
 import requestId from "koa-requestid";
 import serialize from "koa-serialize";
 import expose from "koa-expose";
+import { dependency } from "@cheeket/koa";
 
 import routes from "./routes";
 import { logger } from "./module";
