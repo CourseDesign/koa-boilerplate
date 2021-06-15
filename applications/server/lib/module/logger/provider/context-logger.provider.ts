@@ -1,10 +1,8 @@
-import { interfaces } from "cheeket";
+import { Token, Provider } from "cheeket";
 import { Logger } from "winston";
-import { Token as KoaToken } from "@cheeket/koa";
+import { Tokens as KoaToken } from "@cheeket/koa";
 
-function childLoggerProvider(
-  loggerToken: interfaces.Token<Logger>
-): interfaces.Provider<Logger> {
+function contextLoggerProvider(loggerToken: Token<Logger>): Provider<Logger> {
   return async (context) => {
     const logger = await context.resolve(loggerToken);
     const { state, request } = await context.resolve(KoaToken.Context);
@@ -18,4 +16,4 @@ function childLoggerProvider(
   };
 }
 
-export default childLoggerProvider;
+export default contextLoggerProvider;
