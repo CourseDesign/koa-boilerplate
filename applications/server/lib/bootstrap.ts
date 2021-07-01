@@ -11,7 +11,7 @@ import { filter, finalize } from "koa-logic";
 import { dependency } from "@cheeket/koa";
 
 import routes from "./routes";
-import {RootSerializer, logger, serialize, error} from "./module";
+import { RootSerializer, logger, serialize, error } from "./module";
 import { Config } from "./config";
 import { isRequestType } from "./expression";
 

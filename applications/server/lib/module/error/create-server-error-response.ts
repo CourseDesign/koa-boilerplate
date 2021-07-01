@@ -11,14 +11,14 @@ const errorMap = new Map<number, string>([
   [507, "Insufficient Storage"],
   [508, "Loop Detected"],
   [510, "Not Extended"],
-  [511, "Network Authentication Required"]
-])
+  [511, "Network Authentication Required"],
+]);
 
 function createServerErrorResponse(statusCode: number): ErrorResponse {
-  let error = errorMap.get(statusCode) ?? "Unknown"
+  const error = errorMap.get(statusCode) ?? "Unknown";
   return {
-    error
-  }
+    error,
+  };
 }
 
 export default createServerErrorResponse;
