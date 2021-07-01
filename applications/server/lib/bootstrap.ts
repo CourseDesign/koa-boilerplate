@@ -4,24 +4,20 @@ import { Server } from "net";
 import Application from "koa";
 import koaQs from "koa-qs";
 import bodyParser from "koa-bodyparser";
-import { camelCase, snakeCase } from "koa-change-case";
-import { query, request, response } from "koa-position";
+import { camelCase } from "koa-change-case";
+import { query, request } from "koa-position";
 import requestId from "koa-requestid";
-import serialize from "koa-serialize";
-import expose from "koa-expose";
 import { filter, finalize } from "koa-logic";
-import compose from "koa-compose";
 import { dependency } from "@cheeket/koa";
 
 import routes from "./routes";
-import { logger } from "./module";
+import { RootSerializer, logger, serialize } from "./module";
 import { Config } from "./config";
-import { isRequestType, isResponseType } from "./expression";
+import { isRequestType } from "./expression";
 
 const requestIdHeader = "Request-ID";
 
 const isRequestTypeJson = isRequestType("application/json");
-const isResponseTypeJson = isResponseType("application/json");
 
 async function bootstrap(config: Config): Promise<Server> {
   const application = new Application();
@@ -40,16 +36,7 @@ async function bootstrap(config: Config): Promise<Server> {
   application.use(camelCase(query()));
   application.use(filter(isRequestTypeJson, camelCase(request("body"))));
 
-  const serializeBody = filter(
-    isResponseTypeJson,
-    compose([
-      serialize(response("body")),
-      snakeCase(response("body")),
-      expose(query("fields")),
-    ])
-  );
-
-  application.use(finalize(serializeBody));
+  application.use(finalize(serialize(new RootSerializer())));
 
   const router = routes();
   application.use(router.routes());
