@@ -9,7 +9,7 @@ import { query, request, response } from "koa-position";
 import requestId from "koa-requestid";
 import serialize from "koa-serialize";
 import expose from "koa-expose";
-import { filter } from "koa-logic";
+import { filter, finalize } from "koa-logic";
 import compose from "koa-compose";
 import { dependency } from "@cheeket/koa";
 
@@ -40,20 +40,20 @@ async function bootstrap(config: Config): Promise<Server> {
   application.use(camelCase(query()));
   application.use(filter(isRequestTypeJson, camelCase(request("body"))));
 
+  const serializeBody = filter(
+    isResponseTypeJson,
+    compose([
+      serialize(response("body")),
+      snakeCase(response("body")),
+      expose(query("fields")),
+    ])
+  );
+
+  application.use(finalize(serializeBody));
+
   const router = routes();
   application.use(router.routes());
   application.use(router.allowedMethods());
-
-  application.use(
-    filter(
-      isResponseTypeJson,
-      compose([
-        serialize(response("body")),
-        snakeCase(response("body")),
-        expose(query("fields")),
-      ])
-    )
-  );
 
   return application.listen(config.port);
 }
