@@ -22,9 +22,9 @@ const isRequestTypeJson = isRequestType("application/json");
 async function bootstrap(config: Config): Promise<Server> {
   const application = new Application();
 
-  application.use(finalize(serialize(new RootSerializer())));
-
   koaQs(application);
+
+  application.use(finalize(serialize(new RootSerializer())));
 
   application.use(
     requestId({ expose: requestIdHeader, header: requestIdHeader })
