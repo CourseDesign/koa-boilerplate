@@ -11,7 +11,7 @@ import { filter, finalize } from "koa-logic";
 import { dependency } from "@cheeket/koa";
 
 import routes from "./routes";
-import { RootSerializer, logger, serialize } from "./module";
+import { RootSerializer, logger, serialize, error } from "./module";
 import { Config } from "./config";
 import { isRequestType } from "./expression";
 
@@ -24,6 +24,8 @@ async function bootstrap(config: Config): Promise<Server> {
 
   koaQs(application);
 
+  application.use(finalize(serialize(new RootSerializer())));
+
   application.use(
     requestId({ expose: requestIdHeader, header: requestIdHeader })
   );
@@ -31,12 +33,11 @@ async function bootstrap(config: Config): Promise<Server> {
   application.use(dependency(config.container));
 
   application.use(logger());
+  application.use(error());
 
   application.use(bodyParser());
   application.use(camelCase(query()));
   application.use(filter(isRequestTypeJson, camelCase(request("body"))));
-
-  application.use(finalize(serialize(new RootSerializer())));
 
   const router = routes();
   application.use(router.routes());
