@@ -9,14 +9,19 @@ import koaSerialize from "koa-serialize";
 import { isResponseType } from "../../expression";
 import State from "../../state";
 import Context from "../../context";
+import { Serializer } from "./serializer";
 
 const isResponseTypeJson = isResponseType("application/json");
 
-function serialize(): Application.Middleware<State, Context> {
+function serialize(
+  serializer: Serializer<unknown>
+): Application.Middleware<State, Context> {
   return filter(
     isResponseTypeJson,
     compose([
-      koaSerialize(response("body")),
+      koaSerialize(response("body"), {
+        serialize: (value) => serializer.serialize(value),
+      }),
       snakeCase(response("body")),
       expose(query("fields")),
     ])

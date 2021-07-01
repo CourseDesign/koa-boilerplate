@@ -11,7 +11,7 @@ import { filter, finalize } from "koa-logic";
 import { dependency } from "@cheeket/koa";
 
 import routes from "./routes";
-import { logger, serialize } from "./module";
+import { CustomSerializer, logger, serialize } from "./module";
 import { Config } from "./config";
 import { isRequestType } from "./expression";
 
@@ -36,7 +36,7 @@ async function bootstrap(config: Config): Promise<Server> {
   application.use(camelCase(query()));
   application.use(filter(isRequestTypeJson, camelCase(request("body"))));
 
-  application.use(finalize(serialize()));
+  application.use(finalize(serialize(new CustomSerializer())));
 
   const router = routes();
   application.use(router.routes());
