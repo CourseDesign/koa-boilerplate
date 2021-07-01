@@ -1,3 +1,5 @@
+import { toSnakeCase } from "object-change-case";
+
 import ErrorResponse from "./error-response";
 
 class ErrorAdapter implements ErrorResponse {
@@ -8,7 +10,7 @@ class ErrorAdapter implements ErrorResponse {
   readonly errorUri?: string;
 
   constructor(error: Error & { uri?: string }) {
-    this.error = error.name;
+    this.error = toSnakeCase(error.name);
     this.errorDescription = error.message;
     this.errorUri = error.uri;
   }

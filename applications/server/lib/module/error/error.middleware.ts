@@ -13,10 +13,10 @@ function error(): Application.Middleware<State, Context> {
       await next();
     } catch (e) {
       const status = e.status ?? e.statusCode ?? 500;
+      context.status = status;
+
       if (status >= 500 && status < 600) {
         logger.error(e);
-
-        context.status = status;
         context.body = createServerErrorResponse(status);
       } else {
         context.body = new ErrorAdapter(e);

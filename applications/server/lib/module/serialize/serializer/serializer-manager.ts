@@ -24,16 +24,20 @@ class SerializerManager implements Serializer<unknown> {
   }
 
   get<T>(value: T): Serializer<T> | undefined {
-    let prototype = Object.getPrototypeOf(value);
-    while (prototype != null) {
-      const serializer = this.serializers.get(prototype);
-      if (serializer != null) {
-        return serializer;
+    try {
+      let prototype = Object.getPrototypeOf(value);
+      while (prototype != null) {
+        const serializer = this.serializers.get(prototype);
+        if (serializer != null) {
+          return serializer;
+        }
+        prototype = Object.getPrototypeOf(prototype);
       }
-      prototype = Object.getPrototypeOf(prototype);
-    }
 
-    return undefined;
+      return undefined;
+    } catch {
+      return undefined;
+    }
   }
 }
 
