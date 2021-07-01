@@ -4,7 +4,10 @@ import { toJSON } from "koa-serialize";
 import Serializer from "./serializer";
 
 class SerializerManager implements Serializer<unknown> {
-  readonly serializers = new Map<unknown, Serializer<unknown>>();
+  private readonly serializers = new Map<unknown, Serializer<unknown>>();
+
+  private readonly replacer = (key: string, value: unknown) =>
+    this.serialize(value);
 
   serialize(value: unknown): Json | Promise<Json> {
     const serializer = this.get(value);
@@ -12,7 +15,7 @@ class SerializerManager implements Serializer<unknown> {
       return serializer.serialize(value);
     }
 
-    return toJSON(value);
+    return toJSON(value, this.replacer);
   }
 
   register<T>(type: Type<T>, serializer: Serializer<T>): SerializerManager {

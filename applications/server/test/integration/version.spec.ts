@@ -15,6 +15,6 @@ describe("GET /version", () => {
 
     const json = camelCase(result.body) as Record<string, unknown>;
     expect(json.version).toEqual(process.env.npm_package_version);
-    expect(json.startTime).toBeTruthy();
+    expect(typeof json.startTime).toBe("number");
   });
 });
