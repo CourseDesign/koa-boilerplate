@@ -1,3 +1,5 @@
+import { toSnakeCase } from "object-change-case";
+
 import ErrorResponse from "./error-response";
 
 const errorMap = new Map<number, string>([
@@ -15,7 +17,7 @@ const errorMap = new Map<number, string>([
 ]);
 
 function createServerErrorResponse(statusCode: number): ErrorResponse {
-  const error = errorMap.get(statusCode) ?? "Unknown";
+  const error = toSnakeCase(errorMap.get(statusCode) ?? "Unknown");
   return {
     error,
   };
