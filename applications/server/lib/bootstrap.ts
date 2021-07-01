@@ -32,7 +32,7 @@ async function bootstrap(config: Config): Promise<Server> {
 
   application.use(dependency(config.container));
 
-  application.use(logger());
+  application.use(logger(config.logger ?? {}));
   application.use(error());
 
   application.use(bodyParser());

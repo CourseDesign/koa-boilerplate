@@ -1,5 +1,5 @@
-import { Module } from "@cheeket/koa";
-import { Container, inContainerScope } from "cheeket";
+import { SimpleModule } from "@cheeket/koa";
+import { Container, inContainerScope, Middleware } from "cheeket";
 import * as winston from "winston";
 
 import LoggerTokens from "./logger.tokens";
@@ -8,9 +8,15 @@ import {
   consoleTransportProvider,
   fileTransportProvider,
   loggerProvider,
+  slackTransportProvider,
+  slackTransportFormatter,
 } from "./provider";
 
-class LoggerModule implements Module {
+export type LoggerModuleConfig = {
+  slackWebhook?: string;
+};
+
+class LoggerModule extends SimpleModule {
   private readonly errorFileTransportProvider = inContainerScope(
     fileTransportProvider({
       filename: "logs/error.log",
@@ -44,6 +50,23 @@ class LoggerModule implements Module {
     contextLoggerProvider(LoggerTokens.RootLogger)
   );
 
+  private readonly slackTransportProvider?: Middleware<winston.transport[]>;
+
+  constructor(config: LoggerModuleConfig) {
+    super();
+
+    if (config.slackWebhook) {
+      this.slackTransportProvider = inContainerScope(
+        slackTransportProvider({
+          webhookUrl: config.slackWebhook,
+          level: "error",
+          formatter: slackTransportFormatter,
+        }),
+        { array: true }
+      );
+    }
+  }
+
   configureRoot(container: Container): void {
     container.bind(LoggerTokens.Transports, this.errorFileTransportProvider);
     container.bind(LoggerTokens.Transports, this.combinedFileTransportProvider);
@@ -54,6 +77,9 @@ class LoggerModule implements Module {
       );
     }
     container.bind(LoggerTokens.RootLogger, this.rootLoggerProvider);
+    if (this.slackTransportProvider != null) {
+      container.bind(LoggerTokens.Transports, this.slackTransportProvider);
+    }
   }
 
   configureContext(container: Container): void {
