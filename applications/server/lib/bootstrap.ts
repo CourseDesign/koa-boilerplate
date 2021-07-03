@@ -24,13 +24,12 @@ async function bootstrap(config: Config): Promise<Server> {
 
   koaQs(application);
 
+  application.use(dependency(config.container));
   application.use(finalize(serialize()));
 
   application.use(
     requestId({ expose: requestIdHeader, header: requestIdHeader })
   );
-
-  application.use(dependency(config.container));
 
   application.use(logger(config.logger ?? {}));
   application.use(error());
