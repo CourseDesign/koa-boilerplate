@@ -17,10 +17,10 @@
     "prepublishOnly": "cross-env NODE_ENV=production npm run build"
   },
   "dependencies": {
-    "@cheeket/koa": "^3.1.1",
+    "@cheeket/koa": "^3.1.2",
     "@course-design/decorators": "^1.0.1",
     "@course-design/types": "^1.0.2",
-    "cheeket": "^3.1.0",
+    "cheeket": "^3.2.0",
     "clean-deep": "^3.4.0",
     "conev-sync": "^1.0.5",
     "dotenv": "^10.0.0",
@@ -44,7 +44,8 @@
     "koa-verify-joi": "^1.0.3",
     "object-change-case": "^1.0.0",
     "reflect-metadata": "^0.1.13",
-    "winston": "^3.3.3"
+    "winston": "^3.3.3",
+    "winston-slack-webhook-transport": "^2.0.1"
   },
   "devDependencies": {
     "@types/koa": "^2.13.3",
