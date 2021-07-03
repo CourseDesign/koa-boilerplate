@@ -4,28 +4,44 @@ import { filter } from "koa-logic";
 import { query, response } from "koa-position";
 import { snakeCase } from "koa-change-case";
 import expose from "koa-expose";
-import koaSerialize from "koa-serialize";
+import koaSerialize, { SerializeOptions } from "koa-serialize";
 
+import { install } from "@cheeket/koa";
 import { isResponseType } from "../../expression";
 import State from "../../state";
 import Context from "../../context";
-import { Serializer } from "./serializer";
+import SerializerModule from "./serializer.module";
+import SerializeTokens from "./serialize.tokens";
 
 const isResponseTypeJson = isResponseType("application/json");
 
-function serialize(
-  serializer: Serializer<unknown>
-): Application.Middleware<State, Context> {
-  return filter(
-    isResponseTypeJson,
-    compose([
-      koaSerialize(response("body"), {
-        serialize: (value) => serializer.serialize(value),
-      }),
-      snakeCase(response("body")),
-      expose(query("fields")),
-    ])
-  );
+function serialize(): Application.Middleware<State, Context> {
+  const module = new SerializerModule();
+
+  // eslint-disable-next-line @typescript-eslint/no-shadow
+  const serialize: SerializeOptions<State, Context>["serialize"] = async (
+    value,
+    context
+  ) => {
+    const serializerManager = await context.resolve(
+      SerializeTokens.SerializerManager
+    );
+    return serializerManager.serialize(value);
+  };
+
+  return compose([
+    install(module),
+    filter(
+      isResponseTypeJson,
+      compose([
+        koaSerialize(response("body"), {
+          serialize,
+        }),
+        snakeCase(response("body")),
+        expose(query("fields")),
+      ])
+    ),
+  ]);
 }
 
 export default serialize;
