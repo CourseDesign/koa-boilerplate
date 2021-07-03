@@ -1,5 +1,5 @@
-import { Module } from "@cheeket/koa";
-import { Container, inContainerScope } from "cheeket";
+import { SimpleModule } from "@cheeket/koa";
+import { Container, inContainerScope, MiddlewareAdapter } from "cheeket";
 import * as winston from "winston";
 
 import LoggerTokens from "./logger.tokens";
@@ -8,25 +8,28 @@ import {
   consoleTransportProvider,
   fileTransportProvider,
   loggerProvider,
+  slackTransportProvider,
+  slackTransportFormatter,
 } from "./provider";
 
-class LoggerModule implements Module {
+export type LoggerModuleConfig = {
+  slackWebhook?: string;
+};
+
+class LoggerModule extends SimpleModule {
   private readonly errorFileTransportProvider = inContainerScope(
     fileTransportProvider({
       filename: "logs/error.log",
       level: "error",
-    }),
-    { array: true }
+    })
   );
 
   private readonly combinedFileTransportProvider = inContainerScope(
-    fileTransportProvider({ filename: "logs/combined.log" }),
-    { array: true }
+    fileTransportProvider({ filename: "logs/combined.log" })
   );
 
   private readonly simpleConsoleTransportProvider = inContainerScope(
-    consoleTransportProvider({ format: winston.format.simple() }),
-    { array: true }
+    consoleTransportProvider({ format: winston.format.simple() })
   );
 
   private readonly rootLoggerProvider = inContainerScope(
@@ -44,20 +47,48 @@ class LoggerModule implements Module {
     contextLoggerProvider(LoggerTokens.RootLogger)
   );
 
+  private readonly slackTransportProvider?: MiddlewareAdapter<winston.transport>;
+
+  constructor(config: LoggerModuleConfig) {
+    super();
+
+    if (config.slackWebhook) {
+      this.slackTransportProvider = inContainerScope(
+        slackTransportProvider({
+          webhookUrl: config.slackWebhook,
+          level: "error",
+          formatter: slackTransportFormatter,
+        })
+      );
+    }
+  }
+
   configureRoot(container: Container): void {
-    container.bind(LoggerTokens.Transports, this.errorFileTransportProvider);
-    container.bind(LoggerTokens.Transports, this.combinedFileTransportProvider);
+    container.bind(
+      LoggerTokens.Transports,
+      this.errorFileTransportProvider.bind({ array: true })
+    );
+    container.bind(
+      LoggerTokens.Transports,
+      this.combinedFileTransportProvider.bind({ array: true })
+    );
     if (process.env.NODE_ENV !== "production") {
       container.bind(
         LoggerTokens.Transports,
-        this.simpleConsoleTransportProvider
+        this.simpleConsoleTransportProvider.bind({ array: true })
       );
     }
-    container.bind(LoggerTokens.RootLogger, this.rootLoggerProvider);
+    container.bind(LoggerTokens.RootLogger, this.rootLoggerProvider.bind());
+    if (this.slackTransportProvider != null) {
+      container.bind(
+        LoggerTokens.Transports,
+        this.slackTransportProvider.bind({ array: true })
+      );
+    }
   }
 
   configureContext(container: Container): void {
-    container.bind(LoggerTokens.Logger, this.contextLoggerProvider);
+    container.bind(LoggerTokens.Logger, this.contextLoggerProvider.bind());
   }
 }
 export default LoggerModule;

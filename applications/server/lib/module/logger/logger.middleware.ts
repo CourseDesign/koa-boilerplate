@@ -5,11 +5,13 @@ import { install } from "@cheeket/koa";
 import Context from "../../context";
 import State from "../../state";
 
-import LoggerModule from "./logger.module";
+import LoggerModule, { LoggerModuleConfig } from "./logger.module";
 import LoggerTokens from "./logger.tokens";
 
-function logger(): Application.Middleware<State, Context> {
-  const module = new LoggerModule();
+function logger(
+  config: LoggerModuleConfig
+): Application.Middleware<State, Context> {
+  const module = new LoggerModule(config);
 
   return compose<State, Context, State, Context>([
     install(module),
