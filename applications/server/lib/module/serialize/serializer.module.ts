@@ -3,7 +3,9 @@ import { Container, inContainerScope } from "cheeket";
 import {
   arraySerializerProvider,
   dateSerializerProvider,
+  mapSerializerProvider,
   serializerManagerProvider,
+  setSerializerProvider,
 } from "./provider";
 import SerializeTokens from "./serialize.tokens";
 import { SerializerManager } from "./serializer";
@@ -21,6 +23,14 @@ class SerializerModule extends SimpleModule {
     arraySerializerProvider(SerializeTokens.SerializerManager)
   );
 
+  private readonly setSerializerProvider = inContainerScope(
+    setSerializerProvider(SerializeTokens.SerializerManager)
+  );
+
+  private readonly mapSerializerProvider = inContainerScope(
+    mapSerializerProvider(SerializeTokens.SerializerManager)
+  );
+
   configureRoot(container: Container): void {
     container.bind(
       SerializeTokens.SerializerManager,
@@ -34,6 +44,14 @@ class SerializerModule extends SimpleModule {
       SerializeTokens.ArraySerializer,
       this.arraySerializerProvider.bind()
     );
+    container.bind(
+      SerializeTokens.SetSerializer,
+      this.setSerializerProvider.bind()
+    );
+    container.bind(
+      SerializeTokens.MapSerializer,
+      this.mapSerializerProvider.bind()
+    );
 
     const listener = async (value: unknown, done: () => void) => {
       if (value instanceof SerializerManager) {
@@ -43,9 +61,17 @@ class SerializerModule extends SimpleModule {
         const arraySerializer = await container.resolve(
           SerializeTokens.ArraySerializer
         );
+        const setSerializer = await container.resolve(
+          SerializeTokens.SetSerializer
+        );
+        const mapSerializer = await container.resolve(
+          SerializeTokens.MapSerializer
+        );
 
         value.register(Date, dateSerializer);
         value.register(Array, arraySerializer);
+        value.register(Set, setSerializer);
+        value.register(Map, mapSerializer);
 
         container.removeListener("create:async", listener);
       }
