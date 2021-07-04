@@ -68,10 +68,10 @@ class SerializerModule extends SimpleModule {
           SerializeTokens.MapSerializer
         );
 
-        value.register(Date, dateSerializer);
-        value.register(Array, arraySerializer);
-        value.register(Set, setSerializer);
-        value.register(Map, mapSerializer);
+        value.bind(Date, dateSerializer);
+        value.bind(Array, arraySerializer);
+        value.bind(Set, setSerializer);
+        value.bind(Map, mapSerializer);
 
         container.removeListener("create:async", listener);
       }

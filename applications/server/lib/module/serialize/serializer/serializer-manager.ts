@@ -23,12 +23,12 @@ class SerializerManager implements Serializer<unknown> {
     return toJSON(value, this.replacer);
   }
 
-  register<T>(type: Type<T>, serializer: Serializer<T>): SerializerManager {
+  bind<T>(type: Type<T>, serializer: Serializer<T>): SerializerManager {
     this.serializers.set(type.prototype, serializer);
     return this;
   }
 
-  dynamicRegister<T>(
+  dynamicBind<T>(
     selector: (value: unknown) => boolean,
     serializer: Serializer<T>
   ): SerializerManager {
