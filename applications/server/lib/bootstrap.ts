@@ -34,6 +34,10 @@ async function bootstrap(config: Config): Promise<Server> {
   application.use(logger(config.logger ?? {}));
   application.use(error());
 
+  if (config.interceptor != null) {
+    application.use(config.interceptor);
+  }
+
   application.use(bodyParser());
   application.use(camelCase(query()));
   application.use(filter(isRequestTypeJson, camelCase(request("body"))));
