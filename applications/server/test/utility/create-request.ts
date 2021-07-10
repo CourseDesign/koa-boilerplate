@@ -1,7 +1,7 @@
 import supertest from "supertest";
+import { mock, Mocker } from "@cheeket/koa-mock";
 
 import { bootstrap, ConfigProvider } from "../../lib";
-import { mock, Mocker } from "./mock";
 
 async function createRequest(): Promise<supertest.SuperTest<supertest.Test>> {
   const mocker = new Mocker();
