@@ -1,2 +1,3 @@
 export { default as serialize } from "./serialize.middleware";
-export * from "./serializer";
+export { default as SerializeTokens } from "./serialize.tokens";
+export { default as SerializerModule } from "./serializer.module";

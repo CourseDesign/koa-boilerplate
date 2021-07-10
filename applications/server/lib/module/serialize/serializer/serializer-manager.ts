@@ -6,6 +6,11 @@ import Serializer from "./serializer";
 class SerializerManager implements Serializer<unknown> {
   private readonly serializers = new Map<unknown, Serializer<unknown>>();
 
+  private readonly dynamicSerializers = new Map<
+    (value: unknown) => boolean,
+    Serializer<unknown>
+  >();
+
   private readonly replacer = (key: string, value: unknown) =>
     this.serialize(value);
 
@@ -18,8 +23,16 @@ class SerializerManager implements Serializer<unknown> {
     return toJSON(value, this.replacer);
   }
 
-  register<T>(type: Type<T>, serializer: Serializer<T>): SerializerManager {
+  bind<T>(type: Type<T>, serializer: Serializer<T>): SerializerManager {
     this.serializers.set(type.prototype, serializer);
+    return this;
+  }
+
+  dynamicBind<T>(
+    selector: (value: unknown) => boolean,
+    serializer: Serializer<T>
+  ): SerializerManager {
+    this.dynamicSerializers.set(selector, serializer);
     return this;
   }
 
@@ -32,6 +45,13 @@ class SerializerManager implements Serializer<unknown> {
           return serializer;
         }
         prototype = Object.getPrototypeOf(prototype);
+      }
+
+      // eslint-disable-next-line no-restricted-syntax
+      for (const [selector, serializer] of this.dynamicSerializers) {
+        if (selector(value)) {
+          return serializer;
+        }
       }
 
       return undefined;
