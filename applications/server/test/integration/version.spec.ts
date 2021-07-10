@@ -1,7 +1,7 @@
 import supertest from "supertest";
 import { camelCase } from "object-change-case";
 
-import { createRequest } from "../utility";
+import createRequest from "../create-request";
 
 let request: supertest.SuperTest<supertest.Test>;
 

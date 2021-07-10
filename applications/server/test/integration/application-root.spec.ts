@@ -1,5 +1,5 @@
 import supertest from "supertest";
-import { createRequest } from "../utility";
+import createRequest from "../create-request";
 
 let request: supertest.SuperTest<supertest.Test>;
 

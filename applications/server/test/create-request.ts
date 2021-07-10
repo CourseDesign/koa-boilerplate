@@ -1,14 +1,15 @@
 import supertest from "supertest";
-import { mock, Mocker } from "@cheeket/koa-mock";
+import { mock } from "@cheeket/koa-mock";
 
-import { bootstrap, ConfigProvider } from "../../lib";
+import { bootstrap, ConfigProvider } from "../lib";
+import { MockModule } from "./mock";
 
 async function createRequest(): Promise<supertest.SuperTest<supertest.Test>> {
-  const mocker = new Mocker();
+  const mockModule = new MockModule();
 
   const configProvider = new ConfigProvider({
     port: undefined,
-    interceptor: mock(mocker),
+    interceptor: mock(mockModule),
   });
   const server = await bootstrap(configProvider.get());
 
