@@ -9,7 +9,8 @@
   "scripts": {
     "start": "node dist/start.js",
     "test": "cross-env NODE_ENV=test jest --forceExit",
-    "build": "npm run clean && npm run compile",
+    "build": "gulp",
+    "build:watch": "gulp watch",
     "clean": "rm -rf ./dist",
     "compile": "gulp",
     "lint": "eslint .",
@@ -18,8 +19,8 @@
   },
   "dependencies": {
     "@cheeket/koa": "^3.1.2",
-    "@course-design/decorators": "^1.0.1",
-    "@course-design/types": "^1.0.2",
+    "@course-design/decorators": "^1.1.2",
+    "@course-design/types": "^1.2.1",
     "cheeket": "^3.2.0",
     "clean-deep": "^3.4.0",
     "conev-sync": "^1.0.5",
@@ -28,7 +29,7 @@
     "http-errors": "^1.8.0",
     "is-plain-object": "^5.0.0",
     "joi": "^17.4.0",
-    "jsonlike": "^1.0.0",
+    "jsonlike": "^1.1.7",
     "koa": "^2.13.1",
     "koa-bodyparser": "^4.3.0",
     "koa-change-case": "^1.2.3",
@@ -48,13 +49,13 @@
     "winston-slack-webhook-transport": "^2.0.1"
   },
   "devDependencies": {
-    "@types/koa": "^2.13.3",
-    "@types/koa-bodyparser": "^4.3.0",
+    "@types/koa": "^2.13.4",
+    "@types/koa-bodyparser": "^4.3.2",
     "@types/koa-compose": "^3.2.5",
     "@types/koa-qs": "^2.0.0",
-    "@types/koa-router": "^7.4.1",
-    "@types/supertest": "^2.0.10",
+    "@types/koa-router": "^7.4.4",
+    "@types/supertest": "^2.0.11",
     "supertest": "^6.1.3",
-    "tsc-watch": "^4.2.9"
+    "tsc-watch": "^4.4.0"
   }
 }
