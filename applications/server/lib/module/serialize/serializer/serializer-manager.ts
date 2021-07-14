@@ -1,5 +1,4 @@
 import { Json, Type } from "@course-design/types";
-import { toJSON } from "koa-serialize";
 
 import Serializer from "./serializer";
 
@@ -11,16 +10,13 @@ class SerializerManager implements Serializer<unknown> {
     Serializer<unknown>
   >();
 
-  private readonly replacer = (key: string, value: unknown) =>
-    this.serialize(value);
-
   serialize(value: unknown): Json | Promise<Json> {
     const serializer = this.get(value);
     if (serializer != null) {
       return serializer.serialize(value);
     }
 
-    return toJSON(value, this.replacer);
+    throw new Error("Can't find serializer");
   }
 
   bind<T>(type: Type<T>, serializer: Serializer<T>): SerializerManager {
@@ -46,18 +42,17 @@ class SerializerManager implements Serializer<unknown> {
         }
         prototype = Object.getPrototypeOf(prototype);
       }
+      // eslint-disable-next-line no-empty
+    } catch {}
 
-      // eslint-disable-next-line no-restricted-syntax
-      for (const [selector, serializer] of this.dynamicSerializers) {
-        if (selector(value)) {
-          return serializer;
-        }
+    // eslint-disable-next-line no-restricted-syntax
+    for (const [selector, serializer] of this.dynamicSerializers) {
+      if (selector(value)) {
+        return serializer;
       }
-
-      return undefined;
-    } catch {
-      return undefined;
     }
+
+    return undefined;
   }
 }
 
