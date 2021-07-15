@@ -1,6 +1,6 @@
 import Application from "koa";
 import compose from "koa-compose";
-import { filter } from "koa-logic";
+import { filter, finalize } from "koa-logic";
 import { query, response } from "koa-position";
 import { snakeCase } from "koa-change-case";
 import expose from "koa-expose";
@@ -28,13 +28,15 @@ function serialize(): Application.Middleware<State, Context> {
 
   return compose([
     install(module),
-    filter(
-      isResponseTypeJson,
-      compose([
-        koaSerialize(response("body"), serializer),
-        snakeCase(response("body")),
-        expose(query("fields")),
-      ])
+    finalize(
+      filter(
+        isResponseTypeJson,
+        compose([
+          koaSerialize(response("body"), serializer),
+          snakeCase(response("body")),
+          expose(query("fields")),
+        ])
+      )
     ),
   ]);
 }
