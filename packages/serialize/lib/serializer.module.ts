@@ -16,6 +16,10 @@ import {
 } from "./serializer";
 import Serializer from "./serializer/serializer";
 
+export type SerializerModuleConfig = {
+  register?: (serializerModule: SerializerModule) => void;
+};
+
 class SerializerModule extends SimpleModule {
   private readonly serializers = new Map<
     Type<unknown>,
@@ -31,12 +35,12 @@ class SerializerModule extends SimpleModule {
     serializerManagerProvider()
   );
 
-  constructor(options?: { registerDefault?: boolean }) {
+  constructor(config: SerializerModuleConfig) {
     super();
 
-    const registerDefault = options?.registerDefault ?? true;
-    if (registerDefault) {
-      this.registerDefault();
+    const register = config?.register;
+    if (register != null) {
+      register(this);
     }
   }
 
@@ -54,35 +58,6 @@ class SerializerModule extends SimpleModule {
   ): SerializerModule {
     this.dynamicSerializers.set(selector, serializer);
     return this;
-  }
-
-  registerDefault(): void {
-    const passSerializer = () => new PassSerializer();
-    const notPassSerializer = () => new NotPassSerializer();
-    const dateSerializer = () => new DateSerializer();
-    const objectSerializer = (manger: SerializerManager) =>
-      new ObjectSerializer(manger);
-    const arraySerializer = (manger: SerializerManager) =>
-      new ArraySerializer(manger);
-    const setSerializer = (manger: SerializerManager) =>
-      new SetSerializer(manger);
-    const mapSerializer = (manger: SerializerManager) =>
-      new MapSerializer(manger);
-
-    this.bind(Date, dateSerializer);
-    this.bind(Set, setSerializer);
-    this.bind(Map, mapSerializer);
-
-    this.bind(Array, arraySerializer);
-
-    this.dynamicBind(this.typeMatch("boolean"), passSerializer);
-    this.dynamicBind(this.typeMatch("number"), passSerializer);
-    this.dynamicBind(this.typeMatch("string"), passSerializer);
-    this.dynamicBind(this.typeMatch("undefined"), passSerializer);
-    this.dynamicBind(this.typeMatch("symbol"), notPassSerializer);
-    this.dynamicBind(this.typeMatch("function"), notPassSerializer);
-    this.dynamicBind(this.typeMatch("bigint"), notPassSerializer);
-    this.dynamicBind(this.typeMatch("object"), objectSerializer);
   }
 
   configureRoot(container: Container): void {
@@ -111,21 +86,6 @@ class SerializerModule extends SimpleModule {
     };
 
     container.on("create:async", listener);
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  private typeMatch(
-    type:
-      | "undefined"
-      | "object"
-      | "boolean"
-      | "number"
-      | "bigint"
-      | "string"
-      | "symbol"
-      | "function"
-  ): (value: unknown) => boolean {
-    return (value) => typeof value === type;
   }
 }
 
