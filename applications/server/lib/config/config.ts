@@ -1,7 +1,7 @@
 import { Container } from "cheeket";
 import { Middleware } from "koa";
 
-import { LoggerModuleConfig } from "@internnal/logger";
+import { LoggerModuleConfig } from "@internal/logger";
 
 import Context from "../context";
 import State from "../state";

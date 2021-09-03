@@ -1,11 +1,12 @@
 import Application from "koa";
 
-import Context from "../../context";
-import State from "../../state";
+import { LoggerContext, LoggerState } from "@internal/logger";
+
+import isServerError from "./is-server-error";
 import createServerErrorResponse from "./create-server-error-response";
 import ErrorAdapter from "./error-adapter";
 
-function error(): Application.Middleware<State, Context> {
+function errorHandler(): Application.Middleware<LoggerState, LoggerContext> {
   return async (context, next) => {
     const { logger } = context;
 
@@ -15,7 +16,7 @@ function error(): Application.Middleware<State, Context> {
       const status = e.status ?? e.statusCode ?? 500;
       context.status = status;
 
-      if (status >= 500 && status < 600) {
+      if (isServerError(status)) {
         logger.error(e);
         context.body = createServerErrorResponse(status);
       } else {
@@ -25,4 +26,4 @@ function error(): Application.Middleware<State, Context> {
   };
 }
 
-export default error;
+export default errorHandler;

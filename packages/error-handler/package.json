@@ -1,7 +1,6 @@
 {
-  "name": "@internal/logger",
+  "name": "@internal/error-handler",
   "version": "0.0.0",
-  "private": true,
   "description": "",
   "license": "ISC",
   "author": "",
@@ -17,15 +16,14 @@
     "prepublishOnly": "cross-env NODE_ENV=production npm run build"
   },
   "dependencies": {
-    "koa-compose": "^4.1.0",
-    "winston": "^3.3.3",
-    "winston-slack-webhook-transport": "^2.0.1"
+    "object-change-case": "^1.0.0"
   },
   "devDependencies": {
     "@cheeket/koa": "^3.1.3",
     "@cheeket/koa-mock": "^1.0.1",
     "@course-design/decorators": "^1.1.2",
     "@course-design/types": "^1.2.1",
+    "@internal/logger": "^0.0.0",
     "@types/koa": "^2.13.4",
     "cheeket": "^3.2.1",
     "koa": "^2.13.1"
@@ -35,6 +33,7 @@
     "@cheeket/koa-mock": "^1.0.1",
     "@course-design/decorators": "^1.1.2",
     "@course-design/types": "^1.2.1",
+    "@internal/logger": "^0.0.0",
     "cheeket": "^3.2.1",
     "koa": "^2.13.1"
   }

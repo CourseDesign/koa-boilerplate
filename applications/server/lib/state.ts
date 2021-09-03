@@ -1,5 +1,6 @@
 import { DefaultState } from "koa";
-import { LoggerState } from "@internnal/logger";
+
+import { LoggerState } from "@internal/logger";
 
 type State = DefaultState & LoggerState;
 

@@ -10,12 +10,13 @@ import requestId from "koa-requestid";
 import { filter } from "koa-logic";
 import { dependency } from "@cheeket/koa";
 
-import { logger } from "@internnal/logger";
+import { serialize } from "@internal/serialize";
+import { logger } from "@internal/logger";
+import { errorHandler } from "@internal/error-handler";
+import { isRequestType } from "@internal/koa-expression";
 
 import routes from "./routes";
-import { serialize, error } from "./module";
 import { Config } from "./config";
-import { isRequestType } from "./expression";
 
 const requestIdHeader = "Request-ID";
 
@@ -34,7 +35,7 @@ async function bootstrap(config: Config): Promise<Server> {
   );
 
   application.use(logger(config.logger ?? {}));
-  application.use(error());
+  application.use(errorHandler());
 
   if (config.interceptor != null) {
     application.use(config.interceptor);

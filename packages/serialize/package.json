@@ -1,7 +1,6 @@
 {
-  "name": "@internal/logger",
+  "name": "@internal/serialize",
   "version": "0.0.0",
-  "private": true,
   "description": "",
   "license": "ISC",
   "author": "",
@@ -17,9 +16,13 @@
     "prepublishOnly": "cross-env NODE_ENV=production npm run build"
   },
   "dependencies": {
+    "@internal/koa-expression": "^0.0.0",
+    "koa-change-case": "^1.2.3",
     "koa-compose": "^4.1.0",
-    "winston": "^3.3.3",
-    "winston-slack-webhook-transport": "^2.0.1"
+    "koa-expose": "^1.1.1",
+    "koa-logic": "^1.2.0",
+    "koa-position": "^1.1.9",
+    "koa-serialize": "^1.2.0"
   },
   "devDependencies": {
     "@cheeket/koa": "^3.1.3",

@@ -1,4 +1,4 @@
-import Application from "koa";
+import Application, { DefaultState } from "koa";
 import compose from "koa-compose";
 import { filter, finalize } from "koa-logic";
 import { query, response } from "koa-position";
@@ -7,15 +7,15 @@ import expose from "koa-expose";
 import koaSerialize, { Serializer } from "koa-serialize";
 import { install } from "@cheeket/koa";
 
-import { isResponseType } from "../../expression";
-import State from "../../state";
-import Context from "../../context";
+import { isResponseType } from "@internal/koa-expression";
+
 import SerializerModule from "./serializer.module";
 import SerializeTokens from "./serialize.tokens";
+import SerializeContext from "./serialize.context";
 
 const isResponseTypeJson = isResponseType("application/json");
 
-function serialize(): Application.Middleware<State, Context> {
+function serialize(): Application.Middleware<DefaultState, SerializeContext> {
   const module = new SerializerModule();
 
   // eslint-disable-next-line @typescript-eslint/no-shadow
