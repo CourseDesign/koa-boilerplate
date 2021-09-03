@@ -1,7 +1,7 @@
 import { Context as CheeketContext } from "@cheeket/koa";
 import { RouterContext } from "koa-router";
-import { Logger } from "winston";
+import { LoggerContext } from "@internnal/logger";
 
-type Context = CheeketContext & RouterContext & { logger: Logger };
+type Context = CheeketContext & RouterContext & LoggerContext;
 
 export default Context;

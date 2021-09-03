@@ -11,7 +11,7 @@ function contextLoggerProvider(loggerToken: Token<Logger>): Provider<Logger> {
       ip: request.ip,
       url: request.url,
       method: request.method,
-      requestId: state.requestId,
+      requestId: state.id,
     });
   };
 }

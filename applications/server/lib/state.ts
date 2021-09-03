@@ -1,7 +1,6 @@
 import { DefaultState } from "koa";
+import { LoggerState } from "@internnal/logger";
 
-interface State extends DefaultState {
-  id: string;
-}
+type State = DefaultState & LoggerState;
 
 export default State;
