@@ -70,8 +70,11 @@ const defaultRegister: SerializerModuleConfig["register"] = (
   serializerModule.dynamicBind(typeMatch("object"), objectSerializer);
 };
 
+export type SerializeOption = {
+  register?: SerializerModuleConfig["register"];
+};
 function serialize(
-  option?: Partial<SerializerModuleConfig>
+  option?: SerializeOption
 ): Application.Middleware<DefaultState, SerializeContext> {
   const module = new SerializerModule({
     register: option?.register ?? defaultRegister,

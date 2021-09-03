@@ -4,16 +4,7 @@ import { Type } from "@course-design/types";
 
 import { serializerManagerProvider } from "./provider";
 import SerializeTokens from "./serialize.tokens";
-import {
-  ArraySerializer,
-  DateSerializer,
-  MapSerializer,
-  NotPassSerializer,
-  ObjectSerializer,
-  PassSerializer,
-  SerializerManager,
-  SetSerializer,
-} from "./serializer";
+import { SerializerManager } from "./serializer";
 import Serializer from "./serializer/serializer";
 
 export type SerializerModuleConfig = {
