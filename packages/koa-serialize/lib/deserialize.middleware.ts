@@ -5,6 +5,7 @@ import { query, request } from "koa-position";
 import { camelCase } from "koa-change-case";
 
 import { isRequestType } from "@internal/koa-expression";
+
 import SerializeContext from "./serialize.context";
 
 const isRequestTypeJson = isRequestType("application/json");
