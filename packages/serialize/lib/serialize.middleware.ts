@@ -71,10 +71,10 @@ const defaultRegister: SerializerModuleConfig["register"] = (
 };
 
 function serialize(
-  option: Partial<SerializerModuleConfig>
+  option?: Partial<SerializerModuleConfig>
 ): Application.Middleware<DefaultState, SerializeContext> {
   const module = new SerializerModule({
-    register: option?.register ?? defaultRegister
+    register: option?.register ?? defaultRegister,
   });
 
   // eslint-disable-next-line @typescript-eslint/no-shadow
