@@ -1,5 +1,5 @@
 {
-  "name": "@internal/logger",
+  "name": "@internal/koa-logger",
   "version": "0.0.0",
   "private": true,
   "description": "",

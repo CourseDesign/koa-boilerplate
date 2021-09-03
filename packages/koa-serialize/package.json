@@ -1,5 +1,5 @@
 {
-  "name": "@internal/serialize",
+  "name": "@internal/koa-serialize",
   "version": "0.0.0",
   "description": "",
   "license": "ISC",

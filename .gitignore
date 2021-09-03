@@ -28,7 +28,7 @@ coverage
 # Grunt intermediate storage (https://gruntjs.com/creating-plugins#storing-task-files)
 .grunt
 
-# Bower logger directory (https://bower.io/)
+# Bower koa-logger directory (https://bower.io/)
 bower_components
 
 # node-waf configuration
@@ -41,7 +41,7 @@ build/Release
 node_modules/
 jspm_packages/
 
-# Snowpack logger directory (https://snowpack.dev/)
+# Snowpack koa-logger directory (https://snowpack.dev/)
 web_modules/
 
 # TypeScript cache

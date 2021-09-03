@@ -1,6 +1,6 @@
 import Application from "koa";
 
-import { LoggerContext, LoggerState } from "@internal/logger";
+import { LoggerContext, LoggerState } from "@internal/koa-logger";
 
 import isServerError from "./is-server-error";
 import createServerErrorResponse from "./create-server-error-response";

@@ -10,9 +10,9 @@ import requestId from "koa-requestid";
 import { filter } from "koa-logic";
 import { dependency } from "@cheeket/koa";
 
-import { serialize } from "@internal/serialize";
-import { logger } from "@internal/logger";
-import { errorHandler } from "@internal/error-handler";
+import { serialize } from "@internal/koa-serialize";
+import { logger } from "@internal/koa-logger";
+import { errorHandler } from "@internal/koa-error-handler";
 import { isRequestType } from "@internal/koa-expression";
 
 import routes from "./routes";

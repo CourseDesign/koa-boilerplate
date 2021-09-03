@@ -1,5 +1,5 @@
 {
-  "name": "@internal/error-handler",
+  "name": "@internal/koa-error-handler",
   "version": "0.0.0",
   "description": "",
   "license": "ISC",
@@ -23,7 +23,7 @@
     "@cheeket/koa-mock": "^1.0.1",
     "@course-design/decorators": "^1.1.2",
     "@course-design/types": "^1.2.1",
-    "@internal/logger": "^0.0.0",
+    "@internal/koa-logger": "^0.0.0",
     "@types/koa": "^2.13.4",
     "cheeket": "^3.2.1",
     "koa": "^2.13.1"
@@ -33,7 +33,7 @@
     "@cheeket/koa-mock": "^1.0.1",
     "@course-design/decorators": "^1.1.2",
     "@course-design/types": "^1.2.1",
-    "@internal/logger": "^0.0.0",
+    "@internal/koa-logger": "^0.0.0",
     "cheeket": "^3.2.1",
     "koa": "^2.13.1"
   }

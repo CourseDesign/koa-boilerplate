@@ -2,8 +2,8 @@ import { Context as CheeketContext } from "@cheeket/koa";
 import { RouterContext } from "koa-router";
 import { DefaultContext } from "koa";
 
-import { LoggerContext } from "@internal/logger";
-import { SerializeContext } from "@internal/serialize";
+import { LoggerContext } from "@internal/koa-logger";
+import { SerializeContext } from "@internal/koa-serialize";
 
 type Context = DefaultContext &
   CheeketContext &
