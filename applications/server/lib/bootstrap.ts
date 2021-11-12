@@ -6,6 +6,7 @@ import { Container } from "cheeket";
 import { dependency } from "cheeket-koa";
 
 import Config, { ConfigProvider } from "./config";
+import rootRouter from "./router";
 
 async function bootstrap(config?: Config): Promise<Server> {
   if (config === undefined) {
@@ -13,9 +14,14 @@ async function bootstrap(config?: Config): Promise<Server> {
   }
 
   const application = new Application();
+
   const container = new Container();
+  const router = rootRouter();
 
   application.use(dependency(container));
+
+  application.use(router.routes());
+  application.use(router.allowedMethods());
 
   return application.listen(config.port);
 }
