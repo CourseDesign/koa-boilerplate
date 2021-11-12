@@ -1,7 +1,18 @@
+import dotenv from "dotenv";
+import path from "path";
+
 import Config from "./config";
 
-const environmentConfig: Partial<Config> = Object.freeze({
-  port: 3000,
-});
+if (process.env.NODE_ENV != null) {
+  dotenv.config({
+    path: path.resolve(process.cwd(), `.env.${process.env.NODE_ENV}`),
+  });
+} else {
+  dotenv.config();
+}
+
+const environmentConfig: Partial<Config> = {
+  port: process.env.PORT !== undefined ? Number(process.env.PORT) : undefined,
+};
 
 export default environmentConfig;
