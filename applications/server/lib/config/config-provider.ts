@@ -4,7 +4,7 @@ import defaultConfig from "./default.config";
 import environmentConfig from "./environment.config";
 
 class ConfigProvider {
-  constructor(private readonly overrides: Config) {}
+  constructor(private readonly overrides: Partial<Config> = {}) {}
 
   get(): Config {
     const source = new JsonSource();
