@@ -1,5 +1,5 @@
 interface Config extends Record<string, unknown> {
-  port: number;
+  port?: number;
 }
 
 export default Config;
