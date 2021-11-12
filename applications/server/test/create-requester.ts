@@ -2,7 +2,7 @@ import supertest from "supertest";
 
 import { bootstrap, ConfigProvider } from "../lib";
 
-async function createRequest(): Promise<supertest.SuperTest<supertest.Test>> {
+async function createRequester(): Promise<supertest.SuperTest<supertest.Test>> {
   const configProvider = new ConfigProvider({
     port: undefined,
   });
@@ -11,4 +11,4 @@ async function createRequest(): Promise<supertest.SuperTest<supertest.Test>> {
   return supertest(server);
 }
 
-export default createRequest;
+export default createRequester;
