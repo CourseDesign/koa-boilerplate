@@ -9,6 +9,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "start": "node dist/start.js",
+    "start:watch": "nodemon dist/start.js",
     "test": "cross-env NODE_ENV=test jest --forceExit",
     "build": "gulp",
     "build:watch": "gulp watch",
@@ -24,6 +25,7 @@
     "dotenv": "^10.0.0"
   },
   "devDependencies": {
-    "@types/koa": "^2.13.4"
+    "@types/koa": "^2.13.4",
+    "nodemon": "^2.0.15"
   }
 }
