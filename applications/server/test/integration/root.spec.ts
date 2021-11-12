@@ -11,6 +11,6 @@ describe("GET /", () => {
   test("success", async () => {
     const response = await requester.get("/");
 
-    expect(response.status).toEqual(200);
+    expect(response.status).toEqual(404);
   });
 });
