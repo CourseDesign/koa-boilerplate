@@ -11,8 +11,9 @@ if (process.env.NODE_ENV != null) {
   dotenv.config();
 }
 
-const environmentConfig: Partial<Config> = {
-  port: process.env.PORT !== undefined ? Number(process.env.PORT) : undefined,
-};
+const environmentConfig: Partial<Config> = {};
+if (process.env.PORT !== undefined) {
+  environmentConfig.port = Number(process.env.PORT);
+}
 
 export default environmentConfig;

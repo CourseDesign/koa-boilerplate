@@ -16,8 +16,8 @@ class ConfigProvider {
 
     const builder = new ConfigBuilder();
 
+    builder.addEnv("default", "environment", "overrides");
     builder.addSource(source);
-    builder.addEnv("overrides", "environment", "default");
 
     return builder.build().get() as Config;
   }
