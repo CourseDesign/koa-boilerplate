@@ -9,11 +9,9 @@ import Config, { ConfigProvider } from "./config";
 import rootRouter from "./router";
 import { serialize } from "./middleware";
 
-async function bootstrap(config?: Config): Promise<Server> {
-  if (config === undefined) {
-    config = new ConfigProvider().get();
-  }
-
+async function bootstrap(
+  config: Config = new ConfigProvider().get()
+): Promise<Server> {
   const application = new Application();
 
   const container = new Container();
