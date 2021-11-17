@@ -1,6 +1,6 @@
-import { InternalTokens as parent } from "cheeket-koa";
+import { InternalTokens as parent } from "cheeket-koa-module";
 
-const InternalTokens: typeof parent = Object.freeze({
+const InternalTokens = Object.freeze({
   ...parent,
 });
 

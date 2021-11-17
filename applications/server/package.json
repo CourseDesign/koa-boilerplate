@@ -21,7 +21,8 @@
   },
   "dependencies": {
     "cheeket": "^4.0.0-alpha.0",
-    "cheeket-koa": "^1.0.0-alpha.4",
+    "cheeket-koa": "^1.0.0-alpha.5",
+    "cheeket-koa-module": "^1.0.0-alpha.1",
     "conev-sync": "^1.0.5",
     "dotenv": "^10.0.0",
     "koa": "^2.13.4",
