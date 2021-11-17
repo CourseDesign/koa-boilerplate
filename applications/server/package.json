@@ -33,6 +33,7 @@
     "koa-logic": "^1.2.0",
     "koa-position": "^1.2.0",
     "koa-router": "^10.1.1",
+    "koa-serialize": "^1.2.0",
     "winston": "^3.3.3",
     "winston-transport": "^4.4.0"
   },
