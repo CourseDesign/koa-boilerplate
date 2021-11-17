@@ -28,10 +28,13 @@ class GlobalLoggingModule implements Module {
 
   configure(container: Container): void {
     container.register(this.dependency.GlobalLogger, this.globalLoggerProvider);
-    container.register(
-      this.dependency.Transports,
-      this.consoleTransportProvider
-    );
+
+    if (process.env.NODE_ENV === "production") {
+      container.register(
+        this.dependency.Transports,
+        this.consoleTransportProvider
+      );
+    }
 
     this.configureLogger(container);
   }
