@@ -13,14 +13,14 @@ import { LoggingModule } from "@internal/logging";
 import { Dependency } from "../type";
 
 class RootModule implements Module {
-  private readonly loggingModule = new LoggingModule(this.dependency);
+  private readonly children = [new LoggingModule(this.dependency)];
 
   constructor(private readonly dependency: Dependency) {}
 
   modules(): Middleware<DefaultState, DefaultContext & ContainerContext> {
-    return compose<ParameterizedContext<DefaultState, ContainerContext>>([
-      this.loggingModule.modules(),
-    ]);
+    return compose<ParameterizedContext<DefaultState, ContainerContext>>(
+      this.children.map((module) => module.modules())
+    );
   }
 }
 
