@@ -2,7 +2,7 @@ import { Token } from "cheeket";
 import { Logger } from "winston";
 import * as Transport from "winston-transport";
 
-interface Dependency {
+type Dependency = Readonly<{
   // Out
   GlobalLogger: Token<Logger>;
   LocalLogger: Token<Logger>;
@@ -10,6 +10,6 @@ interface Dependency {
 
   // In
   RequestId: Token<string>;
-}
+}>;
 
 export default Dependency;

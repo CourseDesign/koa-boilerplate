@@ -1,5 +1,15 @@
 import { ModuleManager } from "cheeket-koa-module";
 
-class RootModule extends ModuleManager {}
+import { LoggingModule } from "@internal/logging";
+
+import InternalTokens from "../internal-tokens";
+
+class RootModule extends ModuleManager {
+  constructor() {
+    super();
+
+    this.register(new LoggingModule(InternalTokens));
+  }
+}
 
 export default RootModule;
