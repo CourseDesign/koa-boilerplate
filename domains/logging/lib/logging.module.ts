@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-shadow */
-import { Module } from "cheeket-koa-module";
+import { Module, SimpleModule } from "cheeket-koa-module";
 import {
   DefaultContext,
   DefaultState,
@@ -23,9 +23,7 @@ import requestId from "koa-requestid";
 
 import Dependency from "./dependency";
 
-class LoggingModule implements Module {
-  private readonly globalContainers = new Set<Container>();
-
+class LoggingModule extends SimpleModule {
   private readonly globalLoggerProvider = inContainerScope(() => {
     return winston.createLogger({
       level: "info",
@@ -48,23 +46,19 @@ class LoggingModule implements Module {
     return koaContext.state.id;
   }, bindObject());
 
-  constructor(private readonly dependency: Dependency) {}
+  constructor(private readonly dependency: Dependency) {
+    super();
+  }
 
   modules(): Middleware<DefaultState, DefaultContext & ContainerContext> {
     return compose<ParameterizedContext<DefaultState, ContainerContext>>([
+      super.modules(),
       requestId({
         expose: "Request-Id",
         header: "Request-Id",
         query: false,
       }),
       async (context, next) => {
-        if (!this.globalContainers.has(context.containers.global)) {
-          this.globalContainers.add(context.containers.global);
-          this.configureGlobal(context.containers.global);
-        }
-
-        this.configureLocal(context.containers.local);
-
         try {
           await next();
         } catch (e) {
@@ -79,7 +73,7 @@ class LoggingModule implements Module {
     ]);
   }
 
-  private configureGlobal(container: Container): void {
+  protected configureGlobal(container: Container): void {
     container.register(this.dependency.GlobalLogger, this.globalLoggerProvider);
 
     if (process.env.NODE_ENV === "production") {
@@ -92,7 +86,7 @@ class LoggingModule implements Module {
     this.configureLogger(container);
   }
 
-  private configureLocal(container: Container): void {
+  protected configureLocal(container: Container): void {
     container.register(this.dependency.LocalLogger, this.localLoggerProvider);
     container.register(this.dependency.RequestId, this.requestIdProvider);
   }
