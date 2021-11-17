@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-shadow */
-import { Module, SimpleModule } from "cheeket-koa-module";
+import { SimpleModule } from "cheeket-koa-module";
 import {
   DefaultContext,
   DefaultState,
