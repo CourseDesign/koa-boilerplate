@@ -3,12 +3,13 @@
 import { Server } from "net";
 import Application from "koa";
 import { Container } from "cheeket";
+import { dependency } from "cheeket-koa";
 
 import Config, { ConfigProvider } from "./config";
 import rootRouter from "./router";
 import RootModule from "./module";
 
-import { dependency, serialize } from "./middleware";
+import { serialize } from "./middleware";
 import InternalTokens from "./internal-tokens";
 
 async function bootstrap(
