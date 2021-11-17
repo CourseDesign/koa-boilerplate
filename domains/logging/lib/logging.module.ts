@@ -1,15 +1,116 @@
-import { local, ModuleManager } from "cheeket-koa-module";
+/* eslint-disable @typescript-eslint/no-shadow */
+import { Module } from "cheeket-koa-module";
+import {
+  DefaultContext,
+  DefaultState,
+  Middleware,
+  ParameterizedContext,
+} from "koa";
+import { ContainerContext, InternalTokens } from "cheeket-koa";
+import {
+  bindArray,
+  bindObject,
+  Container,
+  Context,
+  Done,
+  inContainerScope,
+  InternalEvents,
+} from "cheeket";
+import winston, { Logger } from "winston";
+import * as Transport from "winston-transport";
+import compose from "koa-compose";
+import requestId from "koa-requestid";
 
 import Dependency from "./dependency";
-import LocalLoggingModule from "./local-logging.module";
-import GlobalLoggingModule from "./global-logging.module";
 
-class LoggingModule extends ModuleManager {
-  constructor(dependency: Dependency) {
-    super();
+class LoggingModule implements Module {
+  private readonly globalContainers = new Set<Container>();
 
-    this.register(new GlobalLoggingModule(dependency));
-    this.register(local(new LocalLoggingModule(dependency)));
+  private readonly globalLoggerProvider = inContainerScope(() => {
+    return winston.createLogger({
+      level: "info",
+    });
+  }, bindObject());
+
+  private readonly localLoggerProvider = inContainerScope(async (context) => {
+    const globalLogger = await context.resolve(this.dependency.GlobalLogger);
+    const requestId = await context.resolve(this.dependency.RequestId);
+
+    return globalLogger.child({ requestId });
+  }, bindObject());
+
+  private readonly consoleTransportProvider = inContainerScope(() => {
+    return new winston.transports.Console() as Transport;
+  }, bindArray());
+
+  private readonly requestIdProvider = inContainerScope(async (context) => {
+    const koaContext = await context.resolve(InternalTokens.Context);
+    return koaContext.state.id;
+  }, bindObject());
+
+  constructor(private readonly dependency: Dependency) {}
+
+  modules(): Middleware<DefaultState, DefaultContext & ContainerContext> {
+    return compose<ParameterizedContext<DefaultState, ContainerContext>>([
+      requestId({
+        expose: "Request-Id",
+        header: "Request-Id",
+        query: false,
+      }),
+      async (context, next) => {
+        if (!this.globalContainers.has(context.containers.global)) {
+          this.globalContainers.add(context.containers.global);
+          this.configureGlobal(context.containers.global);
+        }
+
+        this.configureLocal(context.containers.local);
+
+        try {
+          await next();
+        } catch (e) {
+          const status = e.status ?? e.statusCode ?? 500;
+          if (status >= 500 && status < 600) {
+            const logger = await context.resolve(this.dependency.LocalLogger);
+            logger.error(e);
+          }
+          throw e;
+        }
+      },
+    ]);
+  }
+
+  private configureGlobal(container: Container): void {
+    container.register(this.dependency.GlobalLogger, this.globalLoggerProvider);
+
+    if (process.env.NODE_ENV === "production") {
+      container.register(
+        this.dependency.Transports,
+        this.consoleTransportProvider
+      );
+    }
+
+    this.configureLogger(container);
+  }
+
+  private configureLocal(container: Container): void {
+    container.register(this.dependency.LocalLogger, this.localLoggerProvider);
+    container.register(this.dependency.RequestId, this.requestIdProvider);
+  }
+
+  private configureLogger(container: Container): void {
+    const listener = async (context: Context<unknown>, done: Done) => {
+      if (context.request === this.dependency.GlobalLogger) {
+        const logger = context.response as Logger;
+        const transports = await container.resolve(this.dependency.Transports);
+        transports.forEach((transport) => {
+          logger.add(transport);
+        });
+        container.removeListener(InternalEvents.CreateAsync, listener);
+      }
+      done();
+    };
+
+    container.on(InternalEvents.CreateAsync, listener);
   }
 }
 

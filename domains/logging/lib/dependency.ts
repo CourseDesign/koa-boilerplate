@@ -3,12 +3,12 @@ import { Logger } from "winston";
 import * as Transport from "winston-transport";
 
 type Dependency = Readonly<{
-  // Out
+  // Global
   GlobalLogger: Token<Logger>;
-  LocalLogger: Token<Logger>;
   Transports: Token<Transport[]>;
 
-  // In
+  // Local
+  LocalLogger: Token<Logger>;
   RequestId: Token<string>;
 }>;
 

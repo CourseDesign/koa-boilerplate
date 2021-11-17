@@ -1,14 +1,26 @@
-import { ModuleManager } from "cheeket-koa-module";
+import { Module } from "cheeket-koa-module";
+import {
+  DefaultContext,
+  DefaultState,
+  Middleware,
+  ParameterizedContext,
+} from "koa";
+import compose from "koa-compose";
+import { ContainerContext } from "cheeket-koa";
 
 import { LoggingModule } from "@internal/logging";
 
-import InternalTokens from "../internal-tokens";
+import { Dependency } from "../type";
 
-class RootModule extends ModuleManager {
-  constructor() {
-    super();
+class RootModule implements Module {
+  private readonly loggingModule = new LoggingModule(this.dependency);
 
-    this.register(new LoggingModule(InternalTokens));
+  constructor(private readonly dependency: Dependency) {}
+
+  modules(): Middleware<DefaultState, DefaultContext & ContainerContext> {
+    return compose<ParameterizedContext<DefaultState, ContainerContext>>([
+      this.loggingModule.modules(),
+    ]);
   }
 }
 
