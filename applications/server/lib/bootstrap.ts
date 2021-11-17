@@ -6,10 +6,9 @@ import { Container } from "cheeket";
 import { dependency } from "cheeket-koa";
 
 import Config, { ConfigProvider } from "./config";
+import { serialize } from "./middleware";
 import rootRouter from "./router";
 import RootModule from "./module";
-
-import { serialize } from "./middleware";
 import InternalTokens from "./internal-tokens";
 
 async function bootstrap(
