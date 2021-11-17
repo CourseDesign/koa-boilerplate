@@ -14,5 +14,19 @@
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "prepublishOnly": "cross-env NODE_ENV=production npm run build"
+  },
+  "devDependencies": {
+    "cheeket": "^4.0.0-alpha.0",
+    "cheeket-koa": "^1.0.0-alpha.5",
+    "cheeket-koa-module": "^1.0.0-alpha.1",
+    "winston": "^3.3.3",
+    "winston-transport": "^4.4.0"
+  },
+  "peerDependencies": {
+    "cheeket": "^4.0.0-alpha.0",
+    "cheeket-koa": "^1.0.0-alpha.5",
+    "cheeket-koa-module": "^1.0.0-alpha.1",
+    "winston": "^3.3.3",
+    "winston-transport": "^4.4.0"
   }
 }
