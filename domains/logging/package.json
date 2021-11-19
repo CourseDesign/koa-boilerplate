@@ -22,7 +22,7 @@
   "devDependencies": {
     "cheeket": "^4.0.0-alpha.1",
     "cheeket-koa": "^1.0.0-alpha.6",
-    "cheeket-koa-module": "^1.0.0-alpha.3",
+    "cheeket-koa-module": "^1.0.0-alpha.6",
     "koa": "^2.13.4",
     "winston": "^3.3.3",
     "winston-transport": "^4.4.0"
@@ -30,7 +30,7 @@
   "peerDependencies": {
     "cheeket": "^4.0.0-alpha.1",
     "cheeket-koa": "^1.0.0-alpha.6",
-    "cheeket-koa-module": "^1.0.0-alpha.3",
+    "cheeket-koa-module": "^1.0.0-alpha.6",
     "koa": "^2.13.4",
     "winston": "^3.3.3",
     "winston-transport": "^4.4.0"

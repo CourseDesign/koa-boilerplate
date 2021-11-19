@@ -1,27 +1,16 @@
-import { Module } from "cheeket-koa-module";
-import {
-  DefaultContext,
-  DefaultState,
-  Middleware,
-  ParameterizedContext,
-} from "koa";
-import compose from "koa-compose";
-import { ContainerContext } from "cheeket-koa";
+import { Module, SimpleModule } from "cheeket-koa-module";
 
 import { LoggingModule } from "@internal/logging";
 
 import { Dependency } from "../type";
 
-class RootModule implements Module {
-  private readonly children = [new LoggingModule(this.dependency)];
+function rootModule(dependency: Dependency): Module {
+  const module = new SimpleModule();
 
-  constructor(private readonly dependency: Dependency) {}
+  const loggingModule = new LoggingModule(dependency);
 
-  modules(): Middleware<DefaultState, DefaultContext & ContainerContext> {
-    return compose<ParameterizedContext<DefaultState, ContainerContext>>(
-      this.children.map((module) => module.modules())
-    );
-  }
+  module.use(loggingModule.modules());
+
+  return module;
 }
-
-export default RootModule;
+export default rootModule;

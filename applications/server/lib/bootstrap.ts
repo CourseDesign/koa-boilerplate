@@ -8,16 +8,16 @@ import { dependency } from "cheeket-koa";
 import Config, { ConfigProvider } from "./config";
 import { serialize } from "./middleware";
 import rootRouter from "./router";
-import RootModule from "./module";
+import rootModule from "./module";
 import InternalTokens from "./internal-tokens";
 
 async function bootstrap(
   config: Config = new ConfigProvider().get()
 ): Promise<Server> {
   const application = new Application();
-
   const container = new Container();
-  const module = new RootModule(InternalTokens);
+
+  const module = rootModule(InternalTokens);
   const router = rootRouter();
 
   application.use(dependency(container));

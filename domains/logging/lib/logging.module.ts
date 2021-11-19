@@ -1,12 +1,6 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 import { SimpleModule } from "cheeket-koa-module";
-import {
-  DefaultContext,
-  DefaultState,
-  Middleware,
-  ParameterizedContext,
-} from "koa";
-import { ContainerContext, InternalTokens } from "cheeket-koa";
+import { InternalTokens } from "cheeket-koa";
 import {
   bindArray,
   bindObject,
@@ -18,7 +12,6 @@ import {
 } from "cheeket";
 import winston, { Logger } from "winston";
 import * as Transport from "winston-transport";
-import compose from "koa-compose";
 import requestId from "koa-requestid";
 
 import Dependency from "./dependency";
@@ -48,11 +41,8 @@ class LoggingModule extends SimpleModule {
 
   constructor(private readonly dependency: Dependency) {
     super();
-  }
 
-  modules(): Middleware<DefaultState, DefaultContext & ContainerContext> {
-    return compose<ParameterizedContext<DefaultState, ContainerContext>>([
-      super.modules(),
+    this.use(
       requestId({
         expose: "Request-Id",
         header: "Request-Id",
@@ -69,8 +59,8 @@ class LoggingModule extends SimpleModule {
           }
           throw e;
         }
-      },
-    ]);
+      }
+    );
   }
 
   protected configureGlobal(container: Container): void {
