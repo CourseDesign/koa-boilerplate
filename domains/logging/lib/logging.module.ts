@@ -1,4 +1,5 @@
-/* eslint-disable @typescript-eslint/no-shadow */
+/* eslint-disable @typescript-eslint/no-shadow,@typescript-eslint/no-explicit-any */
+
 import { SimpleModule } from "cheeket-koa-module";
 import { InternalTokens } from "cheeket-koa";
 import {
@@ -51,7 +52,7 @@ class LoggingModule extends SimpleModule {
       async (context, next) => {
         try {
           await next();
-        } catch (e) {
+        } catch (e: any) {
           const status = e.status ?? e.statusCode ?? 500;
           if (status >= 500 && status < 600) {
             const logger = await context.resolve(this.dependency.LocalLogger);
