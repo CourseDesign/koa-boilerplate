@@ -23,17 +23,17 @@
   },
   "devDependencies": {
     "@types/logform": "^1.10.1",
-    "cheeket": "^4.0.0-alpha.5",
+    "cheeket": "^4.0.0-alpha.6",
     "cheeket-koa": "^1.0.0-alpha.10",
-    "cheeket-koa-module": "^1.0.0-alpha.11",
+    "cheeket-koa-module": "^1.0.0-alpha.12",
     "koa": "^2.13.4",
     "winston": "^3.3.3",
     "winston-transport": "^4.4.0"
   },
   "peerDependencies": {
-    "cheeket": "^4.0.0-alpha.5",
+    "cheeket": "^4.0.0-alpha.6",
     "cheeket-koa": "^1.0.0-alpha.10",
-    "cheeket-koa-module": "^1.0.0-alpha.11",
+    "cheeket-koa-module": "^1.0.0-alpha.12",
     "koa": "^2.13.4",
     "winston": "^3.3.3",
     "winston-transport": "^4.4.0"
