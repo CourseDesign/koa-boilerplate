@@ -66,7 +66,7 @@ class LoggingModule extends SimpleModule {
   protected configureGlobal(container: Container): void {
     container.register(this.dependency.GlobalLogger, this.globalLoggerProvider);
 
-    if (process.env.NODE_ENV === "production") {
+    if (process.env.NODE_ENV !== "production") {
       container.register(
         this.dependency.Transports,
         this.consoleTransportProvider
