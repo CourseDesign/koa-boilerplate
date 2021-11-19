@@ -18,9 +18,11 @@
   "dependencies": {
     "change-case": "^4.1.2",
     "koa-compose": "^4.1.0",
-    "koa-requestid": "^2.1.0"
+    "koa-requestid": "^2.1.0",
+    "logform": "^2.3.0"
   },
   "devDependencies": {
+    "@types/logform": "^1.10.1",
     "cheeket": "^4.0.0-alpha.2",
     "cheeket-koa": "^1.0.0-alpha.7",
     "cheeket-koa-module": "^1.0.0-alpha.8",

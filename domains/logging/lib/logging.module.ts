@@ -21,9 +21,7 @@ import errorAdapt from "./error-adapt";
 
 class LoggingModule extends SimpleModule {
   private readonly globalLoggerProvider = inContainerScope(() => {
-    return winston.createLogger({
-      level: "info",
-    });
+    return winston.createLogger();
   }, bindObject());
 
   private readonly localLoggerProvider = inContainerScope(async (context) => {
@@ -34,7 +32,17 @@ class LoggingModule extends SimpleModule {
   }, bindObject());
 
   private readonly consoleTransportProvider = inContainerScope(() => {
-    return new winston.transports.Console() as Transport;
+    return new winston.transports.Console({
+      format: winston.format.combine(
+        winston.format.timestamp({ format: "YYYY-MM-DD HH:MM:SS" }),
+        winston.format.printf((info) => {
+          return `${info.timestamp} [${
+            info.requestId
+          }] ${info.level.toUpperCase()} ${info.name} - ${info.message}`;
+        }),
+        winston.format.colorize({ all: true })
+      ),
+    }) as Transport;
   }, bindArray());
 
   private readonly requestIdProvider = inContainerScope(async (context) => {
