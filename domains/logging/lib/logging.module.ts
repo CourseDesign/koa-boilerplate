@@ -16,6 +16,8 @@ import * as Transport from "winston-transport";
 import requestId from "koa-requestid";
 
 import Dependency from "./dependency";
+import isServerError from "./is-server-error";
+import errorAdapt from "./error-adapt";
 
 class LoggingModule extends SimpleModule {
   private readonly globalLoggerProvider = inContainerScope(() => {
@@ -54,11 +56,16 @@ class LoggingModule extends SimpleModule {
           await next();
         } catch (e: any) {
           const status = e.status ?? e.statusCode ?? 500;
-          if (status >= 500 && status < 600) {
+          if (isServerError(status)) {
             const logger = await context.resolve(this.dependency.LocalLogger);
             logger.error(e);
           }
-          throw e;
+
+          if (e instanceof Error) {
+            context.response.body = errorAdapt(e, status);
+          } else {
+            throw e;
+          }
         }
       }
     );

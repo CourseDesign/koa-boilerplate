@@ -8,16 +8,16 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "start": "node dist/start.js",
-    "start:watch": "nodemon dist/start.js",
-    "test": "cross-env NODE_ENV=test jest --forceExit",
     "build": "gulp",
     "build:watch": "gulp watch",
     "clean": "rm -rf ./dist",
     "compile": "gulp",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "prepublishOnly": "cross-env NODE_ENV=production npm run build"
+    "prepublishOnly": "cross-env NODE_ENV=production npm run build",
+    "start": "node dist/start.js",
+    "start:watch": "nodemon dist/start.js",
+    "test": "cross-env NODE_ENV=test jest --forceExit"
   },
   "dependencies": {
     "@internal/logging": "^0.0.0",
