@@ -24,12 +24,15 @@ class LoggingModule extends SimpleModule {
     return winston.createLogger();
   }, bindObject());
 
-  private readonly localLoggerProvider = inContainerScope(async (context) => {
-    const globalLogger = await context.resolve(this.dependency.GlobalLogger);
-    const requestId = await context.resolve(this.dependency.RequestId);
+  private readonly localLoggerProvider = inContainerScope<Logger>(
+    async (context) => {
+      const globalLogger = await context.resolve(this.dependency.GlobalLogger);
+      const requestId = await context.resolve(this.dependency.RequestId);
 
-    return globalLogger.child({ requestId });
-  }, bindObject());
+      return globalLogger.child({ requestId });
+    },
+    bindObject()
+  );
 
   private readonly consoleTransportProvider = inContainerScope(() => {
     return new winston.transports.Console({
@@ -89,15 +92,17 @@ class LoggingModule extends SimpleModule {
       );
     }
 
-    this.configureLogger(container);
+    this.configureGlobalLogger(container);
   }
 
   protected configureLocal(container: Container): void {
     container.register(this.dependency.LocalLogger, this.localLoggerProvider);
     container.register(this.dependency.RequestId, this.requestIdProvider);
+
+    this.configureLocalLogger(container);
   }
 
-  private configureLogger(container: Container): void {
+  private configureGlobalLogger(container: Container): void {
     const onCreateListener = async (context: Context<unknown>, done: Done) => {
       if (context.request === this.dependency.GlobalLogger) {
         const logger = context.response as Logger;
@@ -110,7 +115,28 @@ class LoggingModule extends SimpleModule {
       done();
     };
 
+    const onClearListener = (value: unknown) => {
+      const logger = this.globalLoggerProvider.get(container);
+      if (logger !== undefined && logger === value) {
+        logger.clear();
+        container.removeListener(InternalEvents.Clear, onClearListener);
+      }
+    };
+
     container.on(InternalEvents.CreateAsync, onCreateListener);
+    container.on(InternalEvents.Clear, onClearListener);
+  }
+
+  private configureLocalLogger(container: Container): void {
+    const onClearListener = (value: unknown) => {
+      const logger = this.localLoggerProvider.get(container);
+      if (logger !== undefined && logger === value) {
+        logger.clear();
+        container.removeListener(InternalEvents.Clear, onClearListener);
+      }
+    };
+
+    container.on(InternalEvents.Clear, onClearListener);
   }
 }
 
