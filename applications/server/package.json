@@ -21,9 +21,9 @@
   },
   "dependencies": {
     "@internal/logging": "^0.0.0",
-    "cheeket": "^4.0.0-alpha.2",
-    "cheeket-koa": "^1.0.0-alpha.7",
-    "cheeket-koa-module": "^1.0.0-alpha.8",
+    "cheeket": "^4.0.0-alpha.4",
+    "cheeket-koa": "^1.0.0-alpha.9",
+    "cheeket-koa-module": "^1.0.0-alpha.10",
     "conev-sync": "^1.0.5",
     "dotenv": "^10.0.0",
     "koa": "^2.13.4",

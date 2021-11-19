@@ -98,19 +98,19 @@ class LoggingModule extends SimpleModule {
   }
 
   private configureLogger(container: Container): void {
-    const listener = async (context: Context<unknown>, done: Done) => {
+    const onCreateListener = async (context: Context<unknown>, done: Done) => {
       if (context.request === this.dependency.GlobalLogger) {
         const logger = context.response as Logger;
         const transports = await container.resolve(this.dependency.Transports);
         transports.forEach((transport) => {
           logger.add(transport);
         });
-        container.removeListener(InternalEvents.CreateAsync, listener);
+        container.removeListener(InternalEvents.CreateAsync, onCreateListener);
       }
       done();
     };
 
-    container.on(InternalEvents.CreateAsync, listener);
+    container.on(InternalEvents.CreateAsync, onCreateListener);
   }
 }
 
