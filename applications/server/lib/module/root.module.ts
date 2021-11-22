@@ -13,4 +13,5 @@ function rootModule(dependency: Dependency): Module {
 
   return module;
 }
+
 export default rootModule;
