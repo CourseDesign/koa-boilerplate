@@ -44,22 +44,22 @@ function compile() {
   const useSourcemaps = tsconfig.compilerOptions.sourceMap;
 
   return tsProject.src()
-    .pipe(changed(tsconfig.compilerOptions.outDir, { extension: '.js' }))
-    .pipe(gulpif(useSourcemaps, sourcemaps.init()))
-    .pipe(tsProject())
-    .pipe(gulpif(useSourcemaps, sourcemaps.write('.')))
-    .pipe(gulp.dest(tsconfig.compilerOptions.outDir));
+      .pipe(changed(tsconfig.compilerOptions.outDir, { extension: '.js' }))
+      .pipe(gulpif(useSourcemaps, sourcemaps.init()))
+      .pipe(tsProject())
+      .pipe(gulpif(useSourcemaps, sourcemaps.write('.')))
+      .pipe(gulp.dest(tsconfig.compilerOptions.outDir));
 }
 
 function compression() {
   const isProduction = process.env.NODE_ENV === 'production';
 
   return gulp.src(path.join(tsconfig.compilerOptions.outDir, '**/*.js'))
-    .pipe(changed(tsconfig.compilerOptions.outDir, { extension: '.js' }))
-    .pipe(gulpif(isProduction, sourcemaps.init()))
-    .pipe(gulpif(isProduction, uglify({ compress: { awaits: false } })))
-    .pipe(gulpif(isProduction, sourcemaps.write('.')))
-    .pipe(gulp.dest(tsconfig.compilerOptions.outDir));
+      .pipe(changed(tsconfig.compilerOptions.outDir, { extension: '.js' }))
+      .pipe(gulpif(isProduction, sourcemaps.init()))
+      .pipe(gulpif(isProduction, uglify({ compress: { awaits: false } })))
+      .pipe(gulpif(isProduction, sourcemaps.write('.')))
+      .pipe(gulp.dest(tsconfig.compilerOptions.outDir));
 }
 
 const build = gulp.series(compile, compression);

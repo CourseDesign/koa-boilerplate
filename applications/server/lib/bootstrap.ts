@@ -1,48 +1,30 @@
-import "reflect-metadata";
+/* eslint-disable no-param-reassign */
 
 import { Server } from "net";
 import Application from "koa";
-import koaQs from "koa-qs";
-import bodyParser from "koa-bodyparser";
-import { camelCase } from "koa-change-case";
-import { query, request } from "koa-position";
-import requestId from "koa-requestid";
-import { filter, finalize } from "koa-logic";
-import { dependency } from "@cheeket/koa";
+import { Container } from "cheeket";
+import { dependency } from "cheeket-koa";
 
-import routes from "./routes";
-import { logger, serialize, error } from "./module";
-import { Config } from "./config";
-import { isRequestType } from "./expression";
+import Config, { ConfigProvider } from "./config";
+import { serialize } from "./middleware";
+import rootRouter from "./router";
+import rootModule from "./module";
+import InternalTokens from "./internal-tokens";
 
-const requestIdHeader = "Request-ID";
-
-const isRequestTypeJson = isRequestType("application/json");
-
-async function bootstrap(config: Config): Promise<Server> {
+async function bootstrap(
+  config: Config = new ConfigProvider().get()
+): Promise<Server> {
   const application = new Application();
+  const container = new Container();
 
-  koaQs(application);
+  const module = rootModule(InternalTokens);
+  const router = rootRouter();
 
-  application.use(dependency(config.container));
-  application.use(finalize(serialize()));
+  application.use(dependency(container));
+  application.use(serialize());
 
-  application.use(
-    requestId({ expose: requestIdHeader, header: requestIdHeader })
-  );
+  application.use(module.modules());
 
-  application.use(logger(config.logger ?? {}));
-  application.use(error());
-
-  if (config.interceptor != null) {
-    application.use(config.interceptor);
-  }
-
-  application.use(bodyParser());
-  application.use(camelCase(query()));
-  application.use(filter(isRequestTypeJson, camelCase(request("body"))));
-
-  const router = routes();
   application.use(router.routes());
   application.use(router.allowedMethods());
 

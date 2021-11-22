@@ -1,0 +1,41 @@
+{
+  "name": "@internal/logging",
+  "version": "0.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "gulp",
+    "build:watch": "gulp watch",
+    "clean": "rm -rf ./dist",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "prepublishOnly": "cross-env NODE_ENV=production npm run build",
+    "test": "jest"
+  },
+  "dependencies": {
+    "change-case": "^4.1.2",
+    "koa-compose": "^4.1.0",
+    "koa-requestid": "^2.1.0",
+    "logform": "^2.3.0"
+  },
+  "devDependencies": {
+    "@types/logform": "^1.10.1",
+    "cheeket": "^4.0.0-alpha.6",
+    "cheeket-koa": "^1.0.0-alpha.11",
+    "cheeket-koa-module": "^1.0.0-alpha.12",
+    "koa": "^2.13.4",
+    "winston": "^3.3.3",
+    "winston-transport": "^4.4.0"
+  },
+  "peerDependencies": {
+    "cheeket": "^4.0.0-alpha.6",
+    "cheeket-koa": "^1.0.0-alpha.11",
+    "cheeket-koa-module": "^1.0.0-alpha.12",
+    "koa": "^2.13.4",
+    "winston": "^3.3.3",
+    "winston-transport": "^4.4.0"
+  }
+}

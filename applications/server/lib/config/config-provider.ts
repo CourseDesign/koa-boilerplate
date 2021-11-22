@@ -1,34 +1,25 @@
-import { ConfigBuilder, JsonSource, Config as ConevConfig } from "conev-sync";
-import { isPlainObject } from "is-plain-object";
-import cleanDeep from "clean-deep";
-
+import { ConfigBuilder, JsonSource } from "conev-sync";
 import Config from "./config";
-import envConfig from "./env.config";
 import defaultConfig from "./default.config";
+import environmentConfig from "./environment.config";
 
 class ConfigProvider {
-  private readonly config: ConevConfig;
+  constructor(private readonly overrides: Partial<Config> = {}) {}
 
-  constructor(config?: Partial<Config>) {
-    const jsonSource = new JsonSource();
+  get(): Config {
+    const source = new JsonSource();
 
-    jsonSource
-      .set("default", cleanDeep(defaultConfig))
-      .set("env", cleanDeep(envConfig))
-      .set("custom", config ?? {});
+    source
+      .set("default", defaultConfig)
+      .set("environment", environmentConfig)
+      .set("overrides", this.overrides);
 
     const builder = new ConfigBuilder();
 
-    builder
-      .addSource(jsonSource)
-      .addEnv("default", "env", "custom")
-      .setOptions({ isMergeableObject: isPlainObject });
+    builder.addEnv("default", "environment", "overrides");
+    builder.addSource(source);
 
-    this.config = builder.build();
-  }
-
-  get(): Config {
-    return this.config.get() as Config;
+    return builder.build().get() as Config;
   }
 }
 

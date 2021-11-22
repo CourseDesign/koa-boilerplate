@@ -1,7 +1,7 @@
 import Config from "./config";
 
-const defaultConfig: Partial<Config> = {
+const defaultConfig: Config = Object.freeze({
   port: 3000,
-};
+});
 
 export default defaultConfig;
