@@ -1,0 +1,41 @@
+{
+  "name": "@internal/koa-serialize",
+  "version": "0.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "gulp",
+    "build:watch": "gulp watch",
+    "clean": "rm -rf ./dist",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "prepublishOnly": "cross-env NODE_ENV=production npm run build",
+    "test": "jest"
+  },
+  "dependencies": {
+    "koa-bodyparser": "^4.3.0",
+    "koa-change-case": "^1.2.4",
+    "koa-compose": "^4.1.0",
+    "koa-logic": "^1.2.0",
+    "koa-position": "^1.2.0",
+    "koa-serialize": "^1.2.0"
+  },
+  "devDependencies": {
+    "@types/koa": "^2.13.4",
+    "@types/koa-bodyparser": "^4.3.4",
+    "@types/koa-compose": "^3.2.5",
+    "cheeket": "^4.0.0-alpha.7",
+    "cheeket-koa": "^1.0.0-alpha.13",
+    "cheeket-koa-module": "^1.0.0-alpha.14",
+    "koa": "^2.13.4"
+  },
+  "peerDependencies": {
+    "cheeket": "^4.0.0-alpha.7",
+    "cheeket-koa": "^1.0.0-alpha.13",
+    "cheeket-koa-module": "^1.0.0-alpha.14",
+    "koa": "^2.13.4"
+  }
+}
