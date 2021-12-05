@@ -1,7 +1,7 @@
 {
   "packages": [
     "packages/*",
-    "commons/*",
+    "modules/*",
     "domains/*",
     "applications/*"
   ],
