@@ -1,9 +1,8 @@
-import { DefaultContext, DefaultState } from "koa";
-import { IMiddleware } from "koa-router";
+import { DefaultContext, DefaultState, Middleware as KMiddleware } from "koa";
 
 import Context from "./context";
 
-type Middleware<StateT = DefaultState, ContextT = DefaultContext> = IMiddleware<
+type Middleware<StateT = DefaultState, ContextT = DefaultContext> = KMiddleware<
   StateT,
   ContextT & Context
 >;
