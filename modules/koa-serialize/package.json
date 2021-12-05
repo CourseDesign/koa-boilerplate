@@ -29,13 +29,13 @@
     "@types/koa-compose": "^3.2.5",
     "cheeket": "^4.0.0-alpha.7",
     "cheeket-koa": "^1.0.0-alpha.13",
-    "cheeket-koa-module": "^1.0.0-alpha.14",
+    "cheeket-koa-module": "^1.0.0-alpha.15",
     "koa": "^2.13.4"
   },
   "peerDependencies": {
     "cheeket": "^4.0.0-alpha.7",
     "cheeket-koa": "^1.0.0-alpha.13",
-    "cheeket-koa-module": "^1.0.0-alpha.14",
+    "cheeket-koa-module": "^1.0.0-alpha.15",
     "koa": "^2.13.4"
   }
 }

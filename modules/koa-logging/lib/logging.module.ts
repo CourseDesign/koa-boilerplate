@@ -87,6 +87,9 @@ class LoggingModule extends SimpleModule<Context> {
   }
 
   protected configureGlobal(container: Container): void {
+    container.register(this.dependency.LoggingModule, (context) => {
+      context.response = this;
+    });
     container.register(this.dependency.GlobalLogger, this.globalLoggerProvider);
 
     if (process.env.NODE_ENV !== "production") {
