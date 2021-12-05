@@ -6,7 +6,7 @@ import {
   bindArray,
   bindObject,
   Container,
-  Context,
+  Context as CContext,
   Done,
   inContainerScope,
   InternalEvents,
@@ -16,10 +16,12 @@ import * as Transport from "winston-transport";
 import requestId from "koa-requestid";
 
 import Dependency from "./dependency";
+import DefaultDependency from "./default-dependency";
+import Context from "./context";
 import isServerError from "./is-server-error";
 import errorAdapt from "./error-adapt";
 
-class LoggingModule extends SimpleModule {
+class LoggingModule extends SimpleModule<Context> {
   private readonly globalLoggerProvider = inContainerScope(() => {
     return winston.createLogger();
   }, bindObject());
@@ -53,7 +55,7 @@ class LoggingModule extends SimpleModule {
     return koaContext.state.id;
   }, bindObject());
 
-  constructor(private readonly dependency: Dependency) {
+  constructor(private readonly dependency: Dependency = DefaultDependency) {
     super();
 
     this.use(
@@ -63,12 +65,14 @@ class LoggingModule extends SimpleModule {
         query: false,
       }),
       async (context, next) => {
+        const logger = await context.resolve(this.dependency.LocalLogger);
+        context.logger = logger;
+
         try {
           await next();
         } catch (e: any) {
           const status = e.status ?? e.statusCode ?? 500;
           if (isServerError(status)) {
-            const logger = await context.resolve(this.dependency.LocalLogger);
             logger.error(e);
           }
 
@@ -103,7 +107,7 @@ class LoggingModule extends SimpleModule {
   }
 
   private configureGlobalLogger(container: Container): void {
-    const onCreateListener = async (context: Context<unknown>, done: Done) => {
+    const onCreateListener = async (context: CContext<unknown>, done: Done) => {
       if (context.request === this.dependency.GlobalLogger) {
         const logger = context.response as Logger;
         const transports = await container.resolve(this.dependency.Transports);
