@@ -117,7 +117,10 @@ class LoggingModule extends SimpleModule<Context> {
         transports.forEach((transport) => {
           logger.add(transport);
         });
-        container.removeListener(InternalEvents.CreateAsync, onCreateListener);
+        container.removeListener(
+          InternalEvents.PostCreateAsync,
+          onCreateListener
+        );
       }
       done();
     };
@@ -130,7 +133,7 @@ class LoggingModule extends SimpleModule<Context> {
       }
     };
 
-    container.on(InternalEvents.CreateAsync, onCreateListener);
+    container.on(InternalEvents.PostCreateAsync, onCreateListener);
     container.on(InternalEvents.Clear, onClearListener);
   }
 
